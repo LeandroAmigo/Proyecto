@@ -8,7 +8,7 @@ import mapa.Escenario;
 /**
  * 
  */
-public abstract class Sirius extends Enemigo{
+public class Sirius extends Enemigo{
     /**
      * @param e 
      * @param b

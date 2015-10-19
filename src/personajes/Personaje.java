@@ -1,5 +1,10 @@
 package personajes;
 
+import grafica.EntidadGrafica;
+
+import javax.swing.Icon;
+import javax.swing.JLabel;
+
 import logica.Logica;
 import mapa.Celda;
 import mapa.Escenario;
@@ -8,14 +13,16 @@ public abstract class Personaje
 {
 	protected int velocidad=5;
 	protected Celda miCelda;
-	protected Logica miLogica;
+	//protected Logica miLogica;
 	protected Escenario miEscenario;
-	
-	
+	protected EntidadGrafica miGrafica;
 	protected Personaje(Escenario e) 
 	{
 		this.miEscenario=e;
+		this.velocidad=15;
+		miGrafica=new EntidadGrafica(this,4);
 	}
+	
 	public void setPosicion(Celda c) {
 		this.miCelda=c;
 	}
@@ -24,15 +31,18 @@ public abstract class Personaje
 	public Celda getPosicion() {
 		return miCelda;
 	}
+	public abstract void morir();
 	
-	protected void mover(int dir){
-		//Celda next = this.pos.getVecina(dir);
-		//
-		//if(next != null){
-		//	this.pos = next;
-		//	this.grafico.mover(dir);
-		//}
+	
+	protected void mover(int dir)
+	{	}
+	
+	public EntidadGrafica getGraficos()
+	{
+		return miGrafica;
 	}
+	
+	
 	
 	
 }

@@ -23,6 +23,8 @@ public class Transitable extends Contenido{
      */
     public void Recibir(Celda c, Personaje p) {
         // TODO implement here
+    	if(!c.tieneBomba() )
+    		p.setPosicion(c);
     }
 
     /**

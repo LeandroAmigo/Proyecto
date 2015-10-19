@@ -2,6 +2,11 @@ package personajes;
 
 import java.util.*;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+import logica.Logica;
+import mapa.Celda;
 import mapa.Escenario;
 import bomba.Bomba;
 
@@ -13,23 +18,25 @@ public class Bomberman extends Personaje{
    /**
      * 
      */
-    protected int CantBombas;
-
+    protected int cantBombas;
+ 
     /**
      * 
      */
-    protected Boolean Inmune;
+    protected Boolean inmune;
     /**
      * 
      */
-    protected Set<Bomba> MiBomba;
+    protected Set<Bomba> miBomba;
 
     /**
      * @param b
      */
     public Bomberman(Escenario e) {
+    	// TODO implement here
     	super(e);
-        // TODO implement here
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bomberman.png")));
+    	
     }
 
     /**
@@ -98,6 +105,12 @@ public class Bomberman extends Personaje{
      */
     public void moverArriba() {
         // TODO implement here
+    	Celda aux=miCelda;
+    	miEscenario.getLogica().MoverArriba(miCelda, this);
+    	System.out.println("Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+    	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
+    		miCelda.setBomberman(this);
+    	
     }
 
     /**
@@ -105,6 +118,11 @@ public class Bomberman extends Personaje{
      */
     public void moverAbajo() {
         // TODO implement here
+    	Celda aux=miCelda;
+    	miEscenario.getLogica().MoverAbajo(miCelda, this);
+    	System.out.println("Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+    	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
+    		miCelda.setBomberman(this);
     }
 
     /**
@@ -112,6 +130,11 @@ public class Bomberman extends Personaje{
      */
     public void moverDerecha() {
         // TODO implement here
+    	Celda aux=miCelda;
+    	miEscenario.getLogica().MoverDerecha(miCelda, this);
+    	System.out.println("Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+    	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
+    		miCelda.setBomberman(this);
     }
 
     /**
@@ -119,6 +142,11 @@ public class Bomberman extends Personaje{
      */
     public void moverIzquierda() {
         // TODO implement here
+    	Celda aux=miCelda;
+    	miEscenario.getLogica().MoverIzquierda(miCelda, this);
+    	System.out.println("Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+    	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
+    		miCelda.setBomberman(this);
     }
 
 }

@@ -13,13 +13,7 @@ import powerUp.PowerUp;
  */
 public class Celda {
 
-    /**
-     * Default constructor
-     */
-    public Celda() {
-    }
-
-    /**
+   /**
      * 
      */
     protected int fila;
@@ -36,16 +30,11 @@ public class Celda {
     protected Escenario miEscenario;
 
 
+   
     /**
      * 
      */
-    protected Escenario MiEscenario;
-
-
-    /**
-     * 
-     */
-    protected Bomba MiBomba;
+    protected Bomba miBomba;
 
 
 
@@ -54,7 +43,7 @@ public class Celda {
     /**
      * 
      */
-    protected Contenido MiContenido;
+    protected Contenido miContenido;
 
     /**
      * 
@@ -63,12 +52,12 @@ public class Celda {
     /**
      * 
      */
-    protected Bomberman MiBomberman;
+    protected Bomberman miBomberman;
     
     /**
      * 
      */
-    protected Set<Enemigo> misEnemigos;
+    protected Enemigo [] misEnemigos;
 
     /**
      * @param fila 
@@ -78,6 +67,12 @@ public class Celda {
      */
     public Celda(int fila, int columna, Escenario e, Contenido c) {
         // TODO implement here
+    	this.fila=fila;
+    	this.columna=columna;
+    	this.miEscenario=e;
+    	this.miContenido=c;
+    	this.miBomba=null;
+    	this.misEnemigos=new Enemigo[20];
     }
 
     /**
@@ -104,8 +99,12 @@ public class Celda {
     /**
      * @param b
      */
-    public void Recibir(Bomberman b) {
+    public void Recibir(Personaje p) {
         // TODO implement here
+    	if(misEnemigos[0]==null)
+    		miContenido.Recibir(this, p);
+    	else
+    		p.morir();
     }
 
     /**
@@ -113,6 +112,7 @@ public class Celda {
      */
     public void Recibir(Enemigo e) {
         // TODO implement here
+    	
     }
 
     /**
@@ -135,7 +135,7 @@ public class Celda {
      */
     public int getFila() {
         // TODO implement here
-        return 0;
+        return fila;
     }
 
     /**
@@ -143,7 +143,7 @@ public class Celda {
      */
     public int getColumna() {
         // TODO implement here
-        return 0;
+        return columna;
     }
 
     /**
@@ -151,7 +151,7 @@ public class Celda {
      */
     public Escenario getEscenario() {
         // TODO implement here
-        return null;
+        return this.miEscenario;
     }
 
    
@@ -167,7 +167,7 @@ public class Celda {
      */
     public Boolean tieneBomba() {
         // TODO implement here
-        return null;
+    	return (miBomba!=null);
     }
 
     /**
@@ -191,6 +191,10 @@ public class Celda {
     public Bomberman getBomberman() {
         // TODO implement here
         return null;
+    }
+    public void setBomberman(Bomberman b)
+    {
+    	miBomberman=b;
     }
 
 }
