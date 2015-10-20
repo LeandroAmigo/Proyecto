@@ -57,8 +57,9 @@ public class Celda {
     /**
      * 
      */
-    protected Enemigo [] misEnemigos;
+    //protected Enemigo [] misEnemigos;
 
+    protected int cantEnemigos;
     /**
      * @param fila 
      * @param columna 
@@ -72,7 +73,8 @@ public class Celda {
     	this.miEscenario=e;
     	this.miContenido=c;
     	this.miBomba=null;
-    	this.misEnemigos=new Enemigo[20];
+    	//this.misEnemigos=new Enemigo[20];
+    	this.cantEnemigos=0;
     }
 
     /**
@@ -101,19 +103,27 @@ public class Celda {
      */
     public void Recibir(Personaje p) {
         // TODO implement here
-    	if(misEnemigos[0]==null)
-    		miContenido.Recibir(this, p);
-    	else
-    		p.morir();
+    	miContenido.Recibir(this, p);
+    	    	
     }
-
+  /*  
+    public void Recibir(Bomberman b) {
+        // TODO implement here
+    	System.out.println("Bomberman ");
+    	if(misEnemigos[0]==null)
+    		miContenido.Recibir(this, b);
+    	else
+    		b.morir();
+    }
+*/
     /**
      * @param e
      */
-    public void Recibir(Enemigo e) {
-        // TODO implement here
-    	
-    }
+ //   public void Recibir(Enemigo e) {
+ //       // TODO implement here
+ //   	System.out.println("Enemigo ");
+ //   	
+ //   }
 
     /**
      * @return
@@ -180,9 +190,9 @@ public class Celda {
     /**
      * @return
      */
-    public Collection<Enemigo> getEnemigos() {
+    public boolean tieneEnemigos() {
         // TODO implement here
-        return null;
+        return cantEnemigos!=0;
     }
 
     /**
@@ -190,11 +200,22 @@ public class Celda {
      */
     public Bomberman getBomberman() {
         // TODO implement here
-        return null;
+        return miBomberman;
     }
     public void setBomberman(Bomberman b)
     {
     	miBomberman=b;
+    }
+    public void setEnemigo()
+    {
+    	cantEnemigos++;
+    }
+    public void eliminarEnemigoDeLaCelda()
+    {
+    	if(cantEnemigos!=0)
+    	{
+    		cantEnemigos--;
+    	}	
     }
 
 }

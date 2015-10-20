@@ -31,9 +31,10 @@ public class Logica {
     public void MoverArriba(Celda c, Personaje p) {
         // TODO implement here
     	if(c.getFila()!=0)
-    	{	Celda ppos=c.getEscenario().getPosicion(c.getFila()-1, c.getColumna());//Almacena la posicion a la que se desea mover
+    	{	Celda ppos=c.getEscenario().getPosicion(c.getFila()-p.getVelocidad(), c.getColumna());//Almacena la posicion a la que se desea mover
 	    	ppos.Recibir(p);
-	    	p.getGraficos().moverArriba();
+	    	if(c.getFila()!=p.getPosicion().getFila() || c.getColumna()!=p.getPosicion().getColumna())
+	    		p.getGraficos().moverArriba();
     	}
     }	
 
@@ -44,8 +45,9 @@ public class Logica {
     public void MoverAbajo(Celda c, Personaje p) {
         // TODO implement here
 	    if(c.getFila()!=30)	
-	    {	Celda ppos=c.getEscenario().getPosicion(c.getFila()+1, c.getColumna());//Almacena la posicion a la que se desea mover
+	    {	Celda ppos=c.getEscenario().getPosicion(c.getFila()+p.getVelocidad(), c.getColumna());//Almacena la posicion a la que se desea mover
 	    	ppos.Recibir(p);
+	    	if(c.getFila()!=p.getPosicion().getFila() || c.getColumna()!=p.getPosicion().getColumna())
 	    	p.getGraficos().moverAbajo();
 	    }	
     }
@@ -58,8 +60,9 @@ public class Logica {
         // TODO implement here
     	if(c.getColumna()!=30)	
     	{
-    		Celda ppos=c.getEscenario().getPosicion(c.getFila(), c.getColumna()+1);//Almacena la posicion a la que se desea mover
+    		Celda ppos=c.getEscenario().getPosicion(c.getFila(), c.getColumna()+p.getVelocidad());//Almacena la posicion a la que se desea mover
     	   	ppos.Recibir(p);
+    	   	if(c.getFila()!=p.getPosicion().getFila() || c.getColumna()!=p.getPosicion().getColumna())
     	   	p.getGraficos().moverDerecha();
     	}
     } 	
@@ -72,8 +75,9 @@ public class Logica {
         // TODO implement here
     	if(c.getColumna()!=0)
     	{	
-    		Celda ppos=c.getEscenario().getPosicion(c.getFila(), c.getColumna()-1);//Almacena la posicion a la que se desea mover
+    		Celda ppos=c.getEscenario().getPosicion(c.getFila(), c.getColumna()-p.getVelocidad());//Almacena la posicion a la que se desea mover
     		ppos.Recibir(p);
+    		if(c.getFila()!=p.getPosicion().getFila() || c.getColumna()!=p.getPosicion().getColumna())
     		p.getGraficos().moverIzquierda();
     
     	}

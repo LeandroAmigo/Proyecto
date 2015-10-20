@@ -19,8 +19,8 @@ public abstract class Personaje
 	protected Personaje(Escenario e) 
 	{
 		this.miEscenario=e;
-		this.velocidad=15;
-		miGrafica=new EntidadGrafica(this,4);
+		this.velocidad=1;
+		
 	}
 	
 	public void setPosicion(Celda c) {
@@ -42,6 +42,10 @@ public abstract class Personaje
 		return miGrafica;
 	}
 	
+	 public int getVelocidad()
+	    {
+	    	return this.velocidad;
+	    }
 	
 	
 	

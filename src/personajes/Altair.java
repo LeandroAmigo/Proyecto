@@ -1,9 +1,12 @@
 package personajes;
 
+import grafica.EntidadGrafica;
+
 import java.util.*;
 
 import javax.swing.ImageIcon;
 
+import mapa.Celda;
 import mapa.Escenario;
 
 /**
@@ -18,7 +21,7 @@ public class Altair extends Enemigo{
     public Altair(Escenario e) {
         // TODO implement here
     	super(e);
-    	
+    	miGrafica=new EntidadGrafica(this,4,320,320);
     	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/enemigo.png")));
     	
     }
@@ -38,27 +41,41 @@ public class Altair extends Enemigo{
         // TODO implement here
     	Random rnd = new Random();
 		int dir = rnd.nextInt(4);
-		
+		Celda aux=miCelda;
 		switch (dir) {
 			case 0 : //Movimiento arriba
-				//this.mPosicion.setLocation(this.mPosicion.x, this.mPosicion.y - this.mVelocidad);
+				
 				miEscenario.getLogica().MoverArriba(miCelda, this);
+				System.out.println("Mover arriba: Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+				
 				break;
 			case 1 ://movimiento abajo
-				//this.mPosicion.setLocation(this.mPosicion.x, this.mPosicion.y + this.mVelocidad);
-				miEscenario.getLogica().MoverAbajo(miCelda, this);
+					miEscenario.getLogica().MoverAbajo(miCelda, this);
+					System.out.println("Mover abajo: Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+					
 				break;
 			case 2 ://movimiento izquierda
-				//this.mPosicion.setLocation(this.mPosicion.x - this.mVelocidad, this.mPosicion.y);
-				miEscenario.getLogica().MoverIzquierda(miCelda, this);
-				break;
+					miEscenario.getLogica().MoverIzquierda(miCelda, this);
+					System.out.println("Mover izquierda: Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+				
+					break;
 			case 3 ://movimiento derecha
-				//this.mPosicion.setLocation(this.mPosicion.x + this.mVelocidad, this.mPosicion.y);
+				
 				miEscenario.getLogica().MoverDerecha(miCelda, this);
+				System.out.println("Mover derecha: Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+				
 				break;
 		}
+		if(aux.getFila()!=miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())
+		{
+			aux.eliminarEnemigoDeLaCelda();
+			miCelda.setEnemigo();
+			if(miCelda.getBomberman()!=null)
+				miCelda.getBomberman().morir();
+			
+		}
 		
-		//super.mover(dir);
+		
     }
 
     /**

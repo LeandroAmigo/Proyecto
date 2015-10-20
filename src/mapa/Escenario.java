@@ -69,21 +69,7 @@ public class Escenario {
     	   
     	// TODO implement here
        Inicializar(gui);
-    /*	miMatriz=new Celda[31] [31];
-    	for(int fila=0;fila<miMatriz.length;fila++)
-    		for(int columna=0;columna<miMatriz[fila].length;columna++)
-    			{
-    				miMatriz[fila][columna]=new Celda(fila,columna,this,new Transitable());//Inicialice todas transitables!!
-    				
-    			}
-    			
-    	
-    	
-    	//Inicializo bomberman
-    	this.bomberman=new Bomberman(this);
-    	this.bomberman.setPosicion(miMatriz[0][0]);
-    	gui.add(this.bomberman.getGraficos().getGrafico());
-    */	
+    
     }
 
     /**
@@ -221,24 +207,12 @@ public class Escenario {
       for(int i=0; i<misAltair.length;i++)
     	{
     		misAltair[i]=new Altair(this);
-    		misAltair[i].setPosicion(miMatriz[i*10][i*10]);//cualquier posicion 
+    		misAltair[i].setPosicion(miMatriz[10][10]);//cualquier posicion 
     		this.hilo[i]=new MaloThread(misAltair[i]);
     		gui.add(misAltair[i].getGraficos().getGrafico());
     		this.hilo[i].start();
     	}
-     	
-   // Creo los malos y agrego a la gui su grafico.
-  	/*	this.mMalos = new MaloThread[3];
-  		for(int i = 0; i < this.mMalos.length; i++){
-  			Random r = new Random();
-  			
-  			Malo malo = new Malo(10, r.nextInt(gui.getWidth() - 32), r.nextInt(gui.getHeight() - 32));
-  			this.mMalos[i] = new MaloThread(malo);
-  			gui.add(malo.getGrafico());
-  			
-  			this.mMalos[i].start();
-  		}
-  	*/	
+   
     	
     	this.gui=gui;
     }

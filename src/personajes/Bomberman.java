@@ -1,5 +1,7 @@
 package personajes;
 
+import grafica.EntidadGrafica;
+
 import java.util.*;
 
 import javax.swing.ImageIcon;
@@ -35,7 +37,9 @@ public class Bomberman extends Personaje{
     public Bomberman(Escenario e) {
     	// TODO implement here
     	super(e);
+    	this.miGrafica=new EntidadGrafica(this,4,32,0);
     	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bomberman.png")));
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/muerteBomberman.png")));
     	
     }
 
@@ -61,14 +65,7 @@ public class Bomberman extends Personaje{
         return 0;
     }
 
-    /**
-     * @return
-     */
-    public int GetVelocidad() {
-        // TODO implement here
-        return 0;
-    }
-
+   
     /**
      * @return
      */
@@ -90,6 +87,8 @@ public class Bomberman extends Personaje{
      */
     public void morir() {
         // TODO implement here
+    	System.out.println("Murio BOMBERMAN");
+    	miGrafica.Morir();
     }
 
     /**
@@ -110,8 +109,11 @@ public class Bomberman extends Personaje{
     	System.out.println("Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
     	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
     		miCelda.setBomberman(this);
+    	if(miCelda.tieneEnemigos())
+    		this.morir();
     	
     }
+    
 
     /**
      * 
@@ -148,5 +150,6 @@ public class Bomberman extends Personaje{
     	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
     		miCelda.setBomberman(this);
     }
-
+   
+    
 }
