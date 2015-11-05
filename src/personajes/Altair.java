@@ -1,6 +1,7 @@
 package personajes;
 
 import grafica.EntidadGrafica;
+import grafica.PanelEscenario;
 
 import java.util.*;
 
@@ -18,11 +19,17 @@ public class Altair extends Enemigo{
     /**
      * @param e
      */
-    public Altair(Escenario e) {
+    public Altair(Escenario e,int fila,int col,PanelEscenario panel) {
         // TODO implement here
     	super(e);
-    	miGrafica=new EntidadGrafica(this,4,320,320);
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/enemigo.png")));
+    	this.miCelda=e.getPosicion(fila, col);
+    	miGrafica=new EntidadGrafica(this,fila,col,panel);
+    	//SETEO TODO CON LA MISMA IMAGEN! DESPUES HAY QUE PONERLE BIEN CADA UNA
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
     	
     }
 
@@ -37,41 +44,42 @@ public class Altair extends Enemigo{
     /**
      * 
      */
-    public void mover() {
+    public void mover()
+    {
         // TODO implement here
     	Random rnd = new Random();
 		int dir = rnd.nextInt(4);
-		Celda aux=miCelda;
+		Celda aux=this.miCelda;
 		switch (dir) {
 			case 0 : //Movimiento arriba
 				
 				miEscenario.getLogica().MoverArriba(miCelda, this);
-				System.out.println("Mover arriba: Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+				
 				
 				break;
 			case 1 ://movimiento abajo
 					miEscenario.getLogica().MoverAbajo(miCelda, this);
-					System.out.println("Mover abajo: Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+					
 					
 				break;
 			case 2 ://movimiento izquierda
 					miEscenario.getLogica().MoverIzquierda(miCelda, this);
-					System.out.println("Mover izquierda: Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+					
 				
 					break;
 			case 3 ://movimiento derecha
 				
 				miEscenario.getLogica().MoverDerecha(miCelda, this);
-				System.out.println("Mover derecha: Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
+				
 				
 				break;
 		}
-		if(aux.getFila()!=miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())
+		if(aux.getFila()!=this.miCelda.getFila() || aux.getColumna()!=this.miCelda.getColumna())
 		{
 			aux.eliminarEnemigoDeLaCelda();
-			miCelda.setEnemigo();
-			if(miCelda.getBomberman()!=null)
-				miCelda.getBomberman().morir();
+			this.miCelda.setEnemigo();
+			if(this.miCelda.getBomberman()!=null)
+				this.miCelda.getBomberman().morir();
 			
 		}
 		

@@ -1,5 +1,8 @@
 package mapa;
 
+import grafica.PanelEscenario;
+import grafica.ParedGrafica;
+
 import java.util.*;
 
 import personajes.Personaje;
@@ -12,8 +15,9 @@ public class Destructible extends Contenido{
     /**
      * 
      */
-    public Destructible() {
-        // TODO implement here
+    public Destructible(PanelEscenario panel,int fila, int columna) {
+       	this.miPanel=panel;
+    	this.miGrafica=new ParedGrafica(fila,columna,panel,1);
     }
 
     /**
@@ -22,7 +26,7 @@ public class Destructible extends Contenido{
      */
     public void Recibir(Celda c, Personaje p) {
         // TODO implement here
-    }
+    	    }
 
     /**
      * @param c
@@ -30,6 +34,8 @@ public class Destructible extends Contenido{
     public void Destruir(Celda c) {
         // TODO implement here
     }
+
+	
 
    
 }

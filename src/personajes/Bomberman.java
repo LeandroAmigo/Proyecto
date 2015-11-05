@@ -1,6 +1,7 @@
 package personajes;
 
 import grafica.EntidadGrafica;
+import grafica.PanelEscenario;
 
 import java.util.*;
 
@@ -12,143 +13,97 @@ import mapa.Celda;
 import mapa.Escenario;
 import bomba.Bomba;
 
-/**
- * 
- */
 public class Bomberman extends Personaje{
 
-   /**
-     * 
-     */
     protected int cantBombas;
  
-    /**
-     * 
-     */
     protected Boolean inmune;
-    /**
-     * 
-     */
+   
     protected Set<Bomba> miBomba;
 
-    /**
-     * @param b
-     */
-    public Bomberman(Escenario e) {
-    	// TODO implement here
+    public Bomberman(Escenario e,int fila,int col,PanelEscenario panel){
+
     	super(e);
-    	this.miGrafica=new EntidadGrafica(this,4,32,0);
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bomberman.png")));
+    	this.miCelda=e.getPosicion(fila, col);
+    	this.miGrafica=new EntidadGrafica(this,fila,col,panel);
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanAbajo.jpg")));
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanArriba.jpg")));    	
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanDerecha.jpg")));
+    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanIzquierda.jpg")));
     	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/muerteBomberman.png")));
     	
     }
-
-    /**
-     * 
-     */
     public void PonerBomba() {
         // TODO implement here
     }
-
-    /**
-     * 
-     */
     public void SetVelocidad() {
         // TODO implement here
     }
 
-    /**
-     * @return
-     */
     public int SetCantBombas() {
         // TODO implement here
         return 0;
     }
 
-   
-    /**
-     * @return
-     */
     public Bomba GetBomba() {
         // TODO implement here
         return null;
     }
 
-    /**
-     * @return
-     */
     public int GetCantBombas() {
         // TODO implement here
         return 0;
     }
-
-    /**
-     * 
-     */
     public void morir() {
         // TODO implement here
     	System.out.println("Murio BOMBERMAN");
+    	miCelda.setBomberman(null);
     	miGrafica.Morir();
     }
-
-    /**
-     * @return
-     */
     public Boolean atraviesaPared() {
         // TODO implement here
         return null;
     }
 
-    /**
-     * 
-     */
-    public void moverArriba() {
+    public void moverArriba()
+    {
         // TODO implement here
-    	Celda aux=miCelda;
+    	miCelda.setBomberman(null);
+    	System.out.print("Bomberman ");
     	miEscenario.getLogica().MoverArriba(miCelda, this);
-    	System.out.println("Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
-    	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
-    		miCelda.setBomberman(this);
+    	miCelda.setBomberman(this);
     	if(miCelda.tieneEnemigos())
     		this.morir();
+    		
     	
     }
     
-
-    /**
-     * 
-     */
     public void moverAbajo() {
         // TODO implement here
-    	Celda aux=miCelda;
+    	miCelda.setBomberman(null);
+    	System.out.print("Bomberman ");
     	miEscenario.getLogica().MoverAbajo(miCelda, this);
-    	System.out.println("Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
-    	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
-    		miCelda.setBomberman(this);
+   		miCelda.setBomberman(this);
+    	if(miCelda.tieneEnemigos())
+    		this.morir();
     }
-
-    /**
-     * 
-     */
     public void moverDerecha() {
         // TODO implement here
-    	Celda aux=miCelda;
+    	miCelda.setBomberman(null);
+    	System.out.print("Bomberman ");
     	miEscenario.getLogica().MoverDerecha(miCelda, this);
-    	System.out.println("Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
-    	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
-    		miCelda.setBomberman(this);
+    	miCelda.setBomberman(this);    	
+    	if(miCelda.tieneEnemigos())
+    		this.morir();
     }
-
-    /**
-     * 
-     */
     public void moverIzquierda() {
         // TODO implement here
-    	Celda aux=miCelda;
+    	miCelda.setBomberman(null);
+    	System.out.print("Bomberman ");
     	miEscenario.getLogica().MoverIzquierda(miCelda, this);
-    	System.out.println("Fila: "+miCelda.getFila()+"Columna: "+miCelda.getColumna());
-    	if(aux.getFila()==miCelda.getFila() || aux.getColumna()!=miCelda.getColumna())//Si se movio se setea en la celda
-    		miCelda.setBomberman(this);
+   		miCelda.setBomberman(this);
+       	if(miCelda.tieneEnemigos())
+    		this.morir();
     }
    
     

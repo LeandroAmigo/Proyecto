@@ -1,6 +1,13 @@
 package mapa;
 
-import java.util.*;
+
+import grafica.EntidadGrafica;
+import grafica.CeldaGrafica;
+import grafica.PanelEscenario;
+import grafica.ParedGrafica;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import personajes.Personaje;
 
@@ -8,13 +15,17 @@ import personajes.Personaje;
  * 
  */
 public class Transitable extends Contenido{
-
-   
+	 
+	
+ 
     /**
      * 
      */
-    public Transitable() {
+    public Transitable(PanelEscenario p,int fila,int col) {
         // TODO implement here
+    	this.miPanel=p;
+    	this.miGrafica=new ParedGrafica(fila,col,p,2);
+    	
     }
 
     /**
@@ -22,9 +33,9 @@ public class Transitable extends Contenido{
      * @param p
      */
     public void Recibir(Celda c, Personaje p) {
-        // TODO implement here
-    	if(!c.tieneBomba() )
-    		p.setPosicion(c);
+       
+    	p.setPosicion(c);
+    
     }
 
     /**
@@ -33,5 +44,6 @@ public class Transitable extends Contenido{
     public void Destruir(Celda c){
         // TODO implement here
     }
-
+ 
+   
 }

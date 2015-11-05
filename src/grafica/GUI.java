@@ -1,5 +1,6 @@
-package grafica;
+/*package grafica;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
@@ -43,12 +44,13 @@ public class GUI extends JFrame {
 		
 		this.mContentPane = new JPanel();
 		this.mContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.mContentPane.setLayout(null);
-		
+		this.mContentPane.setLayout(new GridLayout());
+		setResizable(false);
 		setContentPane(this.mContentPane);
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(Color.BLACK);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 000, 400, 400);
+		setBounds(000, 000,992,416);
 		
 		this.miEscenario = new Escenario(this);
 	}
@@ -77,3 +79,95 @@ public class GUI extends JFrame {
 		
 	}
 }	
+*/
+
+package grafica ;
+
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.*;
+
+import mapa.*;
+
+
+public class GUI extends JFrame {
+
+	private JFrame frame;
+	private PanelEscenario grilla;
+	private Escenario escenario;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI window = new GUI();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public GUI() {
+		initializar();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initializar()
+	{
+		frame = new JFrame();
+		frame.setTitle("Sadam Husein");
+		frame.setResizable(false);
+		frame.setBounds(100, 100, 998,446); 
+		frame.setLocationRelativeTo(null);
+		frame.setLayout(null);
+		frame.getContentPane().setBackground(Color.BLACK);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		grilla = new PanelEscenario();
+		grilla.setLocation(0,0);
+		frame.add(grilla);
+		
+		escenario=new Escenario(grilla);
+		
+		// Agrega oyende de las teclas
+		frame.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				accion(arg0);
+			}
+		});
+		
+	}
+	protected void accion(KeyEvent key)
+	{
+	
+		int dir=key.getKeyCode();
+		switch (dir){
+		case KeyEvent.VK_UP : 
+				escenario.getBomberman().moverArriba();
+			break;
+		case KeyEvent.VK_DOWN :
+			escenario.getBomberman().moverAbajo();
+			break;
+		case KeyEvent.VK_LEFT :
+			escenario.getBomberman().moverIzquierda();
+			break;
+		case KeyEvent.VK_RIGHT :
+			escenario.getBomberman().moverDerecha();
+			break;
+					}
+		
+				
+	}
+}

@@ -25,10 +25,13 @@ public class MaloThread extends Thread {
 			// Duermo el hilo 1 segundo.
 			// De esta manera cada turno se ejecuta cada 1 segundo.
 			try {
-				Thread.sleep(5000);
+				
 				
 				// Realizo el movimiento
 				this.enemigo.mover();
+				
+				Thread.sleep(2000);
+				
 			} catch (InterruptedException e) { }
 		}
 	}

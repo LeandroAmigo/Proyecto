@@ -1,8 +1,6 @@
 package logica;
 
 import java.util.*;
-
-import personajes.Bomberman;
 import personajes.Personaje;
 import mapa.Celda;
 import mapa.Escenario;
@@ -33,6 +31,7 @@ public class Logica {
     	if(c.getFila()!=0)
     	{	Celda ppos=c.getEscenario().getPosicion(c.getFila()-p.getVelocidad(), c.getColumna());//Almacena la posicion a la que se desea mover
 	    	ppos.Recibir(p);
+	    	System.out.println("Fila: "+p.getPosicion().getFila()+" Columna: "+p.getPosicion().getColumna());
 	    	if(c.getFila()!=p.getPosicion().getFila() || c.getColumna()!=p.getPosicion().getColumna())
 	    		p.getGraficos().moverArriba();
     	}
@@ -47,6 +46,7 @@ public class Logica {
 	    if(c.getFila()!=30)	
 	    {	Celda ppos=c.getEscenario().getPosicion(c.getFila()+p.getVelocidad(), c.getColumna());//Almacena la posicion a la que se desea mover
 	    	ppos.Recibir(p);
+	    	System.out.println("Fila: "+p.getPosicion().getFila()+" Columna: "+p.getPosicion().getColumna());
 	    	if(c.getFila()!=p.getPosicion().getFila() || c.getColumna()!=p.getPosicion().getColumna())
 	    	p.getGraficos().moverAbajo();
 	    }	
@@ -58,13 +58,12 @@ public class Logica {
      */
     public void MoverDerecha(Celda c, Personaje p) {
         // TODO implement here
-    	if(c.getColumna()!=30)	
-    	{
     		Celda ppos=c.getEscenario().getPosicion(c.getFila(), c.getColumna()+p.getVelocidad());//Almacena la posicion a la que se desea mover
     	   	ppos.Recibir(p);
+    	   	System.out.println("Fila: "+p.getPosicion().getFila()+" Columna: "+p.getPosicion().getColumna());
     	   	if(c.getFila()!=p.getPosicion().getFila() || c.getColumna()!=p.getPosicion().getColumna())
     	   	p.getGraficos().moverDerecha();
-    	}
+    	
     } 	
 
     /**
@@ -77,6 +76,7 @@ public class Logica {
     	{	
     		Celda ppos=c.getEscenario().getPosicion(c.getFila(), c.getColumna()-p.getVelocidad());//Almacena la posicion a la que se desea mover
     		ppos.Recibir(p);
+    		System.out.println("Fila: "+p.getPosicion().getFila()+" Columna: "+p.getPosicion().getColumna());
     		if(c.getFila()!=p.getPosicion().getFila() || c.getColumna()!=p.getPosicion().getColumna())
     		p.getGraficos().moverIzquierda();
     

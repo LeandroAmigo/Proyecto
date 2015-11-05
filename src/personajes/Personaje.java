@@ -11,7 +11,7 @@ import mapa.Escenario;
 
 public abstract class Personaje
 {
-	protected int velocidad=5;
+	protected int velocidad;
 	protected Celda miCelda;
 	//protected Logica miLogica;
 	protected Escenario miEscenario;
