@@ -16,10 +16,12 @@ public abstract class Personaje
 	//protected Logica miLogica;
 	protected Escenario miEscenario;
 	protected EntidadGrafica miGrafica;
+	//protected boolean atraviesaPared;
 	protected Personaje(Escenario e) 
 	{
 		this.miEscenario=e;
 		this.velocidad=1;
+		//this.atraviesaPared=false;
 		
 	}
 	
@@ -47,6 +49,9 @@ public abstract class Personaje
 	    	return this.velocidad;
 	    }
 	
-	
+	public boolean atraviesaPared()
+	{
+		return false;
+	}
 	
 }

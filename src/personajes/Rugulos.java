@@ -24,13 +24,7 @@ public class Rugulos extends Enemigo{
         // TODO implement here
     }
 
-    /**
-     * @return
-     */
-    public Boolean atraviesaPared() {
-        // TODO implement here
-        return null;
-    }
+    
 
     /**
      * 

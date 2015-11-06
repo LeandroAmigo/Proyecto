@@ -19,12 +19,12 @@ public class Celda {
     protected int fila;
     protected int columna;
     protected Escenario miEscenario;
-    protected Bomba miBomba;
+   
     protected Contenido miContenido;
     protected PowerUp miPowerUp;
     protected Bomberman miBomberman;
-    //protected LinkedList<Enemigo> enemigo;
-    protected int cantEnemigos;
+    protected LinkedList<Personaje> personajes;
+    
     protected CeldaGrafica miGrafico;
     /**
      * @param fila 
@@ -38,9 +38,8 @@ public class Celda {
     	this.columna=columna;
     	this.miEscenario=e;
     	this.miContenido=c;
-    		//this.enemigos = new LinkedList<Enemigo>();
-    	this.cantEnemigos=0;
-    	miGrafico=new CeldaGrafica(fila,columna,panel,c);
+    	this.personajes = new LinkedList<Personaje>();
+     	miGrafico=new CeldaGrafica(fila,columna,panel,c);
     	
  
     }
@@ -58,16 +57,11 @@ public class Celda {
     }
 
     public void Recibir(Personaje p) {
-        
+        //this.personajes.add(p);
     	miContenido.Recibir(this, p);
     	    	
     }
-    public void Recibir(Enemigo p) {
-       
-    	System.out.println("asda");
-    	miContenido.Recibir(this, p);
-    	    	
-    }
+   
     public Boolean tienePowerUp() {
        
         return null;
@@ -90,36 +84,44 @@ public class Celda {
     public void destruir() {
        
     }
-  
-    public void SetBomba(Bomba b) {
-       
-    	miBomba=b;
-    }
+   
     public boolean tieneEnemigos() {
-       
-        return cantEnemigos!=0;
+    	System.out.println("personajes.size() "+personajes.size());
+        return personajes.size()!=1;//es distinto de 1 porque ya posee al bomberman
     }
     public Bomberman getBomberman() {
         
         return this.miBomberman;
     }
-    
+    /**
+     * b es nulo cuando bomberman se va de la celda ,sino,cuando entra a la celda b es el bomberman
+     * @param b
+     */
     public void setBomberman(Bomberman b)
+    {	
+    	personajes.add(b);
+      	miBomberman=b;
+    }
+    public void eliminarBomberman(Bomberman b)
     {
-    	miBomberman=b;
+    	personajes.remove(b);
+      	miBomberman=null;;
     }
     
-    public void setEnemigo()
-    {
-    	cantEnemigos++;
+    
+    public void setEnemigo(Enemigo e)
+    {	
+    	personajes.add(e);
+    	//cantEnemigos++;
     }
     
-    public void eliminarEnemigoDeLaCelda()
+    public void eliminarEnemigoDeLaCelda(Enemigo e)
     {
-    	if(cantEnemigos!=0)
-    	{
-    		cantEnemigos--;
-    	}	
+    	personajes.remove(e);
+    //	if(cantEnemigos!=0)
+    //	{
+    //		cantEnemigos--;
+    //	}	
     }
     
    

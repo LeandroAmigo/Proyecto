@@ -20,13 +20,7 @@ public class Bomba {
      */
     protected int Alcance;
 
-    /**
-     * 
-     */
-    protected Celda MiCelda;
-
-
-    /**
+   /**
      * 
      */
     protected Celda miCelda;

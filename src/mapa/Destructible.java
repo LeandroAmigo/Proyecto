@@ -26,6 +26,8 @@ public class Destructible extends Contenido{
      */
     public void Recibir(Celda c, Personaje p) {
         // TODO implement here
+    	if(p.atraviesaPared())
+    		p.setPosicion(c);
     	    }
 
     /**

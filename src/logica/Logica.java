@@ -29,7 +29,7 @@ public class Logica {
     public void MoverArriba(Celda c, Personaje p) {
         // TODO implement here
     	if(c.getFila()!=0)
-    	{	Celda ppos=c.getEscenario().getPosicion(c.getFila()-p.getVelocidad(), c.getColumna());//Almacena la posicion a la que se desea mover
+    	{	Celda ppos=miEscenario.getPosicion(c.getFila()-p.getVelocidad(), c.getColumna());//Almacena la posicion a la que se desea mover
 	    	ppos.Recibir(p);
 	    	System.out.println("Fila: "+p.getPosicion().getFila()+" Columna: "+p.getPosicion().getColumna());
 	    	if(c.getFila()!=p.getPosicion().getFila() || c.getColumna()!=p.getPosicion().getColumna())

@@ -15,15 +15,14 @@ import bomba.Bomba;
 
 public class Bomberman extends Personaje{
 
-    protected int cantBombas;
- 
-    protected Boolean inmune;
-   
-    protected Set<Bomba> miBomba;
+    protected int cantBombas;       
+       
+    protected boolean inmune; 
 
     public Bomberman(Escenario e,int fila,int col,PanelEscenario panel){
 
     	super(e);
+    	inmune=false;
     	this.miCelda=e.getPosicion(fila, col);
     	this.miGrafica=new EntidadGrafica(this,fila,col,panel);
     	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanAbajo.jpg")));
@@ -39,7 +38,14 @@ public class Bomberman extends Personaje{
     public void SetVelocidad() {
         // TODO implement here
     }
-
+    public boolean atraviesaPared()
+    {
+    	return inmune;
+    }
+    public void SetMasacrality(boolean m)
+    {
+    	inmune=m;
+    }
     public int SetCantBombas() {
         // TODO implement here
         return 0;
@@ -57,21 +63,17 @@ public class Bomberman extends Personaje{
     public void morir() {
         // TODO implement here
     	System.out.println("Murio BOMBERMAN");
-    	miCelda.setBomberman(null);
+    	miCelda.eliminarBomberman(this);
     	miGrafica.Morir();
     }
-    public Boolean atraviesaPared() {
-        // TODO implement here
-        return null;
-    }
-
+    
     public void moverArriba()
     {
         // TODO implement here
-    	miCelda.setBomberman(null);
+    	miCelda.eliminarBomberman(this);//Se va de la celda    	
     	System.out.print("Bomberman ");
     	miEscenario.getLogica().MoverArriba(miCelda, this);
-    	miCelda.setBomberman(this);
+    	miCelda.setBomberman(this);//entra en la celda
     	if(miCelda.tieneEnemigos())
     		this.morir();
     		
@@ -80,7 +82,7 @@ public class Bomberman extends Personaje{
     
     public void moverAbajo() {
         // TODO implement here
-    	miCelda.setBomberman(null);
+    	miCelda.eliminarBomberman(this);
     	System.out.print("Bomberman ");
     	miEscenario.getLogica().MoverAbajo(miCelda, this);
    		miCelda.setBomberman(this);
@@ -89,7 +91,7 @@ public class Bomberman extends Personaje{
     }
     public void moverDerecha() {
         // TODO implement here
-    	miCelda.setBomberman(null);
+    	miCelda.eliminarBomberman(this);
     	System.out.print("Bomberman ");
     	miEscenario.getLogica().MoverDerecha(miCelda, this);
     	miCelda.setBomberman(this);    	
@@ -98,7 +100,7 @@ public class Bomberman extends Personaje{
     }
     public void moverIzquierda() {
         // TODO implement here
-    	miCelda.setBomberman(null);
+    	miCelda.eliminarBomberman(this);
     	System.out.print("Bomberman ");
     	miEscenario.getLogica().MoverIzquierda(miCelda, this);
    		miCelda.setBomberman(this);

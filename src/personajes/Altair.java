@@ -33,13 +33,6 @@ public class Altair extends Enemigo{
     	
     }
 
-    /**
-     * @return
-     */
-    public Boolean atraviesaPared() {
-        // TODO implement here
-        return null;
-    }
 
     /**
      * 
@@ -76,8 +69,8 @@ public class Altair extends Enemigo{
 		}
 		if(aux.getFila()!=this.miCelda.getFila() || aux.getColumna()!=this.miCelda.getColumna())
 		{
-			aux.eliminarEnemigoDeLaCelda();
-			this.miCelda.setEnemigo();
+			aux.eliminarEnemigoDeLaCelda(this);
+			this.miCelda.setEnemigo(this);
 			if(this.miCelda.getBomberman()!=null)
 				this.miCelda.getBomberman().morir();
 			

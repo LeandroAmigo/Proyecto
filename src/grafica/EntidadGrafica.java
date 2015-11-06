@@ -32,7 +32,7 @@ public class EntidadGrafica {
 		this.posX=posX*ancho;
 		this.posY=posY*alto;
 		this.panel.add(this.getGrafico(), 1);
-
+		
 		
 	}
 	public void setImagen(Icon i)
