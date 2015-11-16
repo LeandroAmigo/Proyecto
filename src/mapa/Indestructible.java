@@ -3,7 +3,11 @@ package mapa;
 
 import grafica.PanelEscenario;
 import grafica.ParedGrafica;
+
 import java.util.*;
+
+import personajes.Bomberman;
+import personajes.Enemigo;
 import personajes.Personaje;
 
 /**
@@ -13,10 +17,10 @@ public class Indestructible extends Contenido{
     /**
      * 
      */
-    public Indestructible(PanelEscenario panel,int fila, int columna) {
+    public Indestructible(int fila, int columna) {
         // TODO implement here
-    	this.miPanel=panel;
-    	this.miGrafica=new ParedGrafica(fila,columna,panel,0);
+      	this.fila=fila;
+    	this.columna=columna;
     	
     }
 
@@ -24,15 +28,15 @@ public class Indestructible extends Contenido{
      * @param c 
      * @param p
      */
-    public void Recibir(Celda c, Personaje p) {
-        // TODO implement here
-    }
+    public void Recibir(Celda c, Bomberman p) { }
+    public void Recibir(Celda c, Enemigo e){}
 
     /**
      * @param c
      */
-    public void Destruir(Celda c) {
+    public boolean Destruir(Celda c) {
         // TODO implement here
+    	return false;
     }
 
 }

@@ -1,11 +1,15 @@
 package mapa;
 
-import grafica.PanelEscenario;
+import grafica.GUI;
+
 import java.util.*;
+
+import logica.CONSTANTES;
 import logica.Logica;
 import logica.MaloThread;
 import personajes.Altair;
 import personajes.Bomberman;
+import personajes.Personaje;
 import personajes.Rugulos;
 import personajes.Sirius;
 
@@ -15,23 +19,26 @@ import personajes.Sirius;
 public class Escenario {
 
 	Logica miLogica;	
-	MaloThread[] hilo;   
+	protected LinkedList<MaloThread> hilos;   
     protected int puntos;
     protected Celda miMatriz[][];
     protected Bomberman bomberman;
-    protected Sirius [] misSirius;
-    protected Altair [] misAltair;
-    protected Rugulos [] misRugulos;
-    protected PanelEscenario gui;  
+    protected LinkedList<Sirius> misSirius;
+    protected LinkedList<Altair> misAltair;
+    protected LinkedList<Rugulos> misRugulos;
+    protected GUI gui; 
+    protected final int Ancho=13;
+    protected final int Largo=31;
     
-    public Escenario(PanelEscenario gui) {
+    public Escenario(GUI gui) {
     	   
-    	
-       Inicializar(gui);
+    	this.gui=gui;
+       Inicializar();
     
     }
 
-    public void setPosicion(int fila,int columna,Celda c) {
+    public void setPosicion(int fila,int columna,Celda c) 
+    {
        
     }
     /**
@@ -40,60 +47,72 @@ public class Escenario {
      * @param columna
      * @return
      */
-    public Celda getPosicion( int fila,  int columna) {
+    public Celda getPosicion( int fila,  int columna)
+    {
          return miMatriz[fila][columna];
     }
 
-    public Collection<Sirius> getSirius() {
+    public Collection<Sirius> getSirius()
+    {
         
         return null;
     }
 
-    public Sirius getSirius(Sirius s) {
+    public Sirius getSirius(Sirius s)
+    {
         
         return null;
     }
 
-    public void eliminarSirius(Sirius s) {
+    public void eliminarSirius(Sirius s)
+    {
         
     }
 
-    public Collection<Altair> getAltair() {
+    public Collection<Altair> getAltair()
+    {
        
         return null;
     }
 
-    public Altair getAltair(Altair a) {
+    public Altair getAltair(Altair a) 
+    {
         
         return null;
     }
 
-    public void eliminarAltair(Altair a) {
+    public void eliminarAltair(Altair a)
+    {
         
     }
 
-    public Collection<Rugulos> getRugulos() {
+    public Collection<Rugulos> getRugulos() 
+    {
        
         return null;
     }
 
-    public Rugulos getRugulos(Rugulos r) {
+    public Rugulos getRugulos(Rugulos r) 
+    {
        
         return null;
     }
 
-    public void eliminarRugulos(Rugulos r) {
+    public void eliminarRugulos(Rugulos r) 
+    {
        
     }
     /**
      * Retorna bomberman
      * @return Bomberman
      */
-    public Bomberman getBomberman() {
+    public Bomberman getBomberman()
+    {
         
         return this.bomberman;
     }
-    public void sumarPuntos(int p) {
+    public void sumarPuntos(int p) 
+    {
         
     }
     /**
@@ -111,36 +130,39 @@ public class Escenario {
      */
     
     
-    public void Inicializar(PanelEscenario panel) {
+    public void Inicializar() 
+    {
     	this.miLogica=new Logica(this);
-    	InicializarEscenario(panel);
-    	InicializarBomberman(panel);
-    	InicializarAltair(panel);
+    	InicializarEscenario();
+    	InicializarBomberman();
+    	InicializarAltair();
     	this.gui.repaint();
     }
     
-    private void InicializarBomberman(PanelEscenario panel)
+    private void InicializarBomberman()
     {
-    	this.bomberman = new Bomberman(this,1,1, panel);
+    	this.bomberman = new Bomberman(this,1,1);
     	this.miMatriz[1][1].setBomberman(this.bomberman);
     }
     
-    private void InicializarAltair(PanelEscenario panel)
-    {
-    	misAltair=new Altair[2];
-    	hilo=new MaloThread[2];
-        for(int i=0; i<misAltair.length;i++)
+    private void InicializarAltair()
+    {   int CantAltair=2;
+    	misAltair=new LinkedList<Altair>();
+    	hilos=new LinkedList<MaloThread>();
+        for(int i=0; i<CantAltair;i++)
     	{
-    		misAltair[i]=new Altair(this,11,11,panel);//Falta setear posicion aleatoria!    		
-    		this.hilo[i]=new MaloThread(misAltair[i]);
-     		this.hilo[i].start();
+    		misAltair.add(new Altair(this,11,11));//Falta setear posicion aleatoria! 
+    		
+    		this.hilos.add(new MaloThread(misAltair.get(i)));
+    		misAltair.get(i).SetHilo(hilos.get(i));
+     		this.hilos.get(i).start();
     	}
     }
     
-    private void InicializarEscenario(PanelEscenario panel)
+    private void InicializarEscenario()
     {	
-    	this.gui=panel;
-    	this.miMatriz = new Celda[13][31];
+    	
+    	this.miMatriz = new Celda[this.Ancho][this.Largo];
     	int cantDestructibles = 10;
     	boolean estanTodas = false;
     	Random random = new Random();
@@ -148,41 +170,98 @@ public class Escenario {
     	int columna;
     	
     	// Se generan las paredes indestructibles
-    	for (int i = 0; i < this.miMatriz.length; i++) {
-    		for (int j = 0; j < this.miMatriz[0].length; j++) {
-    			if (((i == 0) || (i == 12) || (j == 0) || (j == 30)) || ((i % 2 == 0) && (j % 2 == 0))) {
+    	for (int i = 0; i < Ancho; i++)
+    	{
+    		for (int j = 0; j < Largo; j++)
+    		{
+    			if (((i == 0) || (i ==Ancho-1) || (j == 0) || (j == Largo-1)) || ((i % 2 == 0) && (j % 2 == 0)))
+    			{
     				// Limite del escenario e indestructibles del medio
-    				this.miMatriz[i][j] = new Celda(i, j, this,new Indestructible(panel,i,j),panel);
+    				this.miMatriz[i][j] = new Celda(i, j, this,new Indestructible(i,j));
+    				this.miMatriz[i][j].getGrafica().setGrafico(CONSTANTES.P_Indestructible);
+    				
     			}
     		}
     	}
     	
     	// Se generan las indestructibles en forma aleatoria
-    	while (!estanTodas) {
-    		fila = random.nextInt(this.miMatriz.length - 1) + 1; // Numero aleatorio entre 1 y cantidad de filas - 1
-    		columna = random.nextInt(this.miMatriz[0].length - 1) + 1; // Numero aleatorio entre 1 y cantidad de columnas - 1
+    	while (!estanTodas)
+    	{
+    		fila = random.nextInt(this.Ancho - 1) + 1; // Numero aleatorio entre 1 y cantidad de filas - 1
+    		columna = random.nextInt(this.Largo - 1) + 1; // Numero aleatorio entre 1 y cantidad de columnas - 1
     		boolean espacioLibreBomberman = ((fila == 1) && (columna == 1)) || ((fila == 1) && (columna == 2)) || ((fila == 2) && (columna == 1)); // Espacio libre al inicio
-    		boolean espacioLibreSirius = ((fila == 11) && (columna == 29)) || ((fila == 11) && (columna == 28)) || ((fila == 10) && (columna == 29)); // Espacio libre al inicio
+    		boolean espacioLibreSirius = ((fila == this.Ancho-1) && (columna == this.Largo-1)) || ((fila == 11) && (columna == this.Largo-2)) || ((fila == this.Ancho-3) && (columna == this.Largo-2)); // Espacio libre al inicio
     		
-    		if ((this.miMatriz[fila][columna] == null) && (!espacioLibreBomberman) && (!espacioLibreSirius)) {
-    			this.miMatriz[fila][columna] = new Celda(fila, columna, this,new Destructible(panel,fila,columna), panel);
+    		if ((this.miMatriz[fila][columna] == null) && (!espacioLibreBomberman) && (!espacioLibreSirius))
+    		{
+    			this.miMatriz[fila][columna] = new Celda(fila, columna, this,new Destructible(fila,columna));
+    			this.miMatriz[fila][columna].getGrafica().setGrafico(CONSTANTES.P_Destructible);
 				cantDestructibles--;
     		}
     		estanTodas = (cantDestructibles == 0);
     	}
     	
     	// Se generan los transitables en las posiciones restantes
-    	for (int i = 0; i < this.miMatriz.length; i++) {
-    		for (int j = 0; j < this.miMatriz[0].length; j++) {
-    			if (this.miMatriz[i][j] == null) {
-    				this.miMatriz[i][j] = new Celda(i, j, this,new Transitable(panel,i,j), panel);
+    	for (int i = 0; i < this.Ancho; i++)
+    	{
+    		for (int j = 0; j < this.Largo; j++)
+    		{
+    			if (this.miMatriz[i][j] == null)
+    			{
+    				this.miMatriz[i][j] = new Celda(i, j, this,new Transitable(i,j));
+    				this.miMatriz[i][j].getGrafica().setGrafico(CONSTANTES.P_Transitable);
     			}
     		}
     	}    	
     	   	
+    
     	
     }
     
+    public LinkedList<Celda> getAdyacentes(Celda c, int alcance)
+    {	int filaAux;
+    	int columnaAux;
+    	Celda adyacente;
+    	LinkedList<Celda> lista=new LinkedList<Celda>();
+    	for(int i=1;i<alcance+1;i++)
+    	{
+    		filaAux=c.getFila()-i;
+    		
+    		
+    		if(filaAux>=0)
+    		{	
+    			adyacente= getPosicion(filaAux,c.getColumna());//celda arriba
+    			lista.add(adyacente);
+    		}
+    		filaAux=c.getFila()+i;
+    		if(filaAux<this.Ancho)
+    		{
+    			adyacente= getPosicion(filaAux,c.getColumna());//celda abajo
+    			lista.add(adyacente);
+    		}	
+    		columnaAux=c.getColumna()-i;
+    		if(columnaAux>=0)
+    		{	
+    			adyacente= getPosicion(c.getFila(),columnaAux);//celda derecha
+    			lista.add(adyacente);
+    		}
+    		columnaAux=c.getColumna()+i;
+    		if(columnaAux<=this.Largo-1)
+    		{	
+    			adyacente= getPosicion(c.getFila(),columnaAux);//celda izquierda
+    			lista.add(adyacente);
+    		}
+    	}
+    	
+    	
+    	
+    	return lista;
+    	
+    }  
+    public GUI getGui()
+    {
+    	return this.gui;
+    }
     
     
 }

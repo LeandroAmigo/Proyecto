@@ -1,36 +1,43 @@
 package bomba;
 
+
 import java.util.*;
 
+import personajes.Bomberman;
+import grafica.BombaGrafica;
 import mapa.Celda;
 
 /**
  * 
  */
-public class Bomba {
+public class Bomba implements Runnable {
 
-    /**
-     * Default constructor
-     */
-    public Bomba() {
-    }
+    
 
     /**
      * 
      */
     protected int Alcance;
+    protected Bomberman b;
 
    /**
      * 
      */
     protected Celda miCelda;
-
+    
+    protected BombaGrafica miGrafica;
     /**
      * @param c 
      * @param alcance
      */
-    public void Bomba(Celda c, int alcance) {
+    public Bomba(Celda c, int alcance) {
         // TODO implement here
+    	this.miCelda=c;
+    	b=miCelda.getBomberman();
+     	this.Alcance=alcance;
+    	this.miGrafica = new BombaGrafica(c.getFila(), c.getColumna(),c.getEscenario().getGui());
+    	
+    	
     }
 
     /**
@@ -38,36 +45,63 @@ public class Bomba {
      */
     public int GetAlcance() {
         // TODO implement here
-        return 0;
+        return Alcance;
     }
 
     /**
      * 
      */
-    public void SetAlcance() {
+    public void SetAlcance(int a) {
         // TODO implement here
+    	Alcance=a;
     }
 
     /**
      * 
      */
-    public void explotar() {
-        // TODO implement here
+    public void explotar(LinkedList<Celda> c1) {
+     	for(int i=0; i<c1.size();i++)
+    	{
+    		c1.get(i).destruir();
+    		    	    		
+    	}
+    	miCelda.destruir();
+    	b.SetCantBombas(b.GetCantBombas()+1);
+    	
+    	
     }
 
-    /**
-     * @param r
-     */
-    public void retraso(int r) {
-        // TODO implement here
+    public void desaparecer(LinkedList<Celda> c1) {
+   		
+   	    miCelda.restaurar();	
+    	for(int i=0; i<c1.size();i++)
+    	{
+    		Celda a=c1.get(i);
+    		a.restaurar();   		
+    	}
+    
     }
-
-    /**
+   /**
      * @return
      */
     public Celda getCelda() {
         // TODO implement here
-        return null;
+        return miCelda;
+    }
+    //CAMBIAR EN EL DIAGRAMA RETRASO POR RUN
+    public void run() {
+    	try {
+    		LinkedList<Celda> c1=miCelda.getEscenario().getAdyacentes(miCelda,Alcance);
+    		Thread.sleep(4000);
+    		miGrafica.desaparecer();//Imagen de la bomba
+    		explotar(c1);
+    		Thread.sleep(1000); 
+    		desaparecer(c1);
+    		Thread.interrupted();
+    		    		 
+    	 	} catch (InterruptedException e) {
+    	 		e.printStackTrace();
+    	}
     }
 
 }

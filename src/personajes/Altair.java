@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.swing.ImageIcon;
 
+import logica.MaloThread;
 import mapa.Celda;
 import mapa.Escenario;
 
@@ -19,17 +20,18 @@ public class Altair extends Enemigo{
     /**
      * @param e
      */
-    public Altair(Escenario e,int fila,int col,PanelEscenario panel) {
+    public Altair(Escenario e,int fila,int col) {
         // TODO implement here
     	super(e);
     	this.miCelda=e.getPosicion(fila, col);
-    	miGrafica=new EntidadGrafica(this,fila,col,panel);
+    	miGrafica=new EntidadGrafica(this,fila,col,e.getGui());
+    	
     	//SETEO TODO CON LA MISMA IMAGEN! DESPUES HAY QUE PONERLE BIEN CADA UNA
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
+    	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
+    	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
+    	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
+    	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
+       	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/AltairMuerte.png")));
     	
     }
 
@@ -42,7 +44,6 @@ public class Altair extends Enemigo{
         // TODO implement here
     	Random rnd = new Random();
 		int dir = rnd.nextInt(4);
-		Celda aux=this.miCelda;
 		switch (dir) {
 			case 0 : //Movimiento arriba
 				
@@ -67,20 +68,26 @@ public class Altair extends Enemigo{
 				
 				break;
 		}
-		if(aux.getFila()!=this.miCelda.getFila() || aux.getColumna()!=this.miCelda.getColumna())
-		{
-			aux.eliminarEnemigoDeLaCelda(this);
-			this.miCelda.setEnemigo(this);
-			if(this.miCelda.getBomberman()!=null)
-				this.miCelda.getBomberman().morir();
-			
-		}
-		
-		
+	
     }
 
     /**
      * 
      */
-    public void morir(){};
+    public void morir()
+    {
+    try{
+    	System.out.println("Murio ALTAIR");
+    	miCelda.eliminarEnemigoDeLaCelda(this);
+    	miGrafica.Morir();
+    	miEscenario.eliminarAltair(this);
+    	miHilo.sleep(0000);
+    	miGrafica.Eliminar();
+    	miHilo.detener();
+    }catch(InterruptedException e){}
+    }
+    public void SetHilo(MaloThread hilo)
+    {
+    	this.miHilo=hilo;
+    }
 }

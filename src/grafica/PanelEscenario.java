@@ -14,9 +14,9 @@ public class PanelEscenario extends JPanel {
 		ImageIcon imagen = new ImageIcon(this.getClass().getResource("/Imagenes/fondo.png"));//IMAGEN DE FONDO
 		for (int i = 0; i < cantFilas; i++) {
 			for (int j = 0; j < cantColumnas; j++) {
-				JLabel bg = new JLabel(imagen);
-				bg.setBounds(j * 32, i * 32, 32, 32);
-				this.add(bg, -1);
+				JLabel fondo = new JLabel(imagen);
+				fondo.setBounds(j * 32, i * 32, 32, 32);
+				this.add(fondo, -1);
 			}
 		}
 	}

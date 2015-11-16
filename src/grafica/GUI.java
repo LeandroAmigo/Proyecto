@@ -96,6 +96,7 @@ public class GUI extends JFrame {
 
 	private JFrame frame;
 	private PanelEscenario grilla;
+	
 	private Escenario escenario;
 	
 	/**
@@ -127,7 +128,7 @@ public class GUI extends JFrame {
 	private void initializar()
 	{
 		frame = new JFrame();
-		frame.setTitle("Sadam Husein");
+		frame.setTitle("Bomberman");
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 998,446); 
 		frame.setLocationRelativeTo(null);
@@ -138,7 +139,7 @@ public class GUI extends JFrame {
 		grilla.setLocation(0,0);
 		frame.add(grilla);
 		
-		escenario=new Escenario(grilla);
+		escenario=new Escenario(this);
 		
 		// Agrega oyende de las teclas
 		frame.addKeyListener(new KeyAdapter() {
@@ -166,8 +167,23 @@ public class GUI extends JFrame {
 		case KeyEvent.VK_RIGHT :
 			escenario.getBomberman().moverDerecha();
 			break;
+		case KeyEvent.VK_SPACE :
+			escenario.getBomberman().PonerBomba();
+			break;
+			
 					}
-		
-				
+					
 	}
+	public void addPanelEscenario(JLabel Imagen,int prof)
+	{
+		grilla.add(Imagen,prof);
+		grilla.repaint();
+	}
+	public void removePanelEscenario(JLabel grafico)
+	{
+		grilla.remove(grafico);
+		grilla.repaint();
+	}
+	
+
 }

@@ -13,16 +13,13 @@ public abstract class Personaje
 {
 	protected int velocidad;
 	protected Celda miCelda;
-	//protected Logica miLogica;
 	protected Escenario miEscenario;
 	protected EntidadGrafica miGrafica;
-	//protected boolean atraviesaPared;
 	protected Personaje(Escenario e) 
 	{
 		this.miEscenario=e;
 		this.velocidad=1;
-		//this.atraviesaPared=false;
-		
+			
 	}
 	
 	public void setPosicion(Celda c) {

@@ -1,4 +1,4 @@
-package grafica;
+/*package grafica;
 
 
 import javax.swing.Icon;
@@ -61,3 +61,4 @@ public class CeldaGrafica {
 
 }
 
+*/

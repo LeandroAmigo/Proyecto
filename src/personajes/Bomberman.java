@@ -8,6 +8,7 @@ import java.util.*;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import logica.CONSTANTES;
 import logica.Logica;
 import mapa.Celda;
 import mapa.Escenario;
@@ -18,25 +19,41 @@ public class Bomberman extends Personaje{
     protected int cantBombas;       
        
     protected boolean inmune; 
+    
+    protected int alcanceBomba;
+        
 
-    public Bomberman(Escenario e,int fila,int col,PanelEscenario panel){
+    public Bomberman(Escenario e,int fila,int col){
 
     	super(e);
+    	cantBombas=2;
     	inmune=false;
+    	alcanceBomba=1;
     	this.miCelda=e.getPosicion(fila, col);
-    	this.miGrafica=new EntidadGrafica(this,fila,col,panel);
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanAbajo.jpg")));
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanArriba.jpg")));    	
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanDerecha.jpg")));
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanIzquierda.jpg")));
-    	this.miGrafica.setImagen(new ImageIcon(this.getClass().getResource("/Imagenes/muerteBomberman.png")));
+    	this.miGrafica=new EntidadGrafica(this,fila,col,e.getGui());
+    	
+    	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanDerecha.jpg")));
+    	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanIzquierda.jpg")));
+    	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanArriba.jpg"))); 
+    	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanAbajo.jpg")));
+    	
+    	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/muerteBomberman.png")));
     	
     }
     public void PonerBomba() {
         // TODO implement here
+    	if(cantBombas>0)
+    	{	cantBombas--;
+    	    Bomba b=new Bomba(miCelda,alcanceBomba);
+    		Thread hilo = new Thread(b);
+        	hilo.start();
+           	//cantBombas++;
+    		
+    	}	
     }
-    public void SetVelocidad() {
-        // TODO implement here
+    public void SetVelocidad(int v) {
+     
+    	velocidad=v;
     }
     public boolean atraviesaPared()
     {
@@ -46,66 +63,58 @@ public class Bomberman extends Personaje{
     {
     	inmune=m;
     }
-    public int SetCantBombas() {
-        // TODO implement here
-        return 0;
+    public void SetCantBombas(int cant) {
+       
+        cantBombas=cant;
     }
 
-    public Bomba GetBomba() {
-        // TODO implement here
-        return null;
+    public int GetAlcanceBomba() {
+     
+        return alcanceBomba;
     }
+    public void SetAlcanceBomba(int a) {
+       
+        alcanceBomba=a;
+    }
+    
 
     public int GetCantBombas() {
-        // TODO implement here
-        return 0;
+       
+        return cantBombas;
     }
     public void morir() {
-        // TODO implement here
+        
     	System.out.println("Murio BOMBERMAN");
     	miCelda.eliminarBomberman(this);
     	miGrafica.Morir();
     }
     
     public void moverArriba()
-    {
-        // TODO implement here
-    	miCelda.eliminarBomberman(this);//Se va de la celda    	
-    	System.out.print("Bomberman ");
-    	miEscenario.getLogica().MoverArriba(miCelda, this);
-    	miCelda.setBomberman(this);//entra en la celda
-    	if(miCelda.tieneEnemigos())
-    		this.morir();
-    		
+    {	
     	
+    	miEscenario.getLogica().MoverArriba(miCelda, this);   		
+    	miGrafica.SetImagen(CONSTANTES.B_MirarArriba, this);
     }
     
     public void moverAbajo() {
-        // TODO implement here
-    	miCelda.eliminarBomberman(this);
-    	System.out.print("Bomberman ");
+       
+    	
     	miEscenario.getLogica().MoverAbajo(miCelda, this);
-   		miCelda.setBomberman(this);
-    	if(miCelda.tieneEnemigos())
-    		this.morir();
+    	miGrafica.SetImagen(CONSTANTES.B_MirarAbajo, this);
     }
     public void moverDerecha() {
-        // TODO implement here
-    	miCelda.eliminarBomberman(this);
-    	System.out.print("Bomberman ");
+       
+    	
     	miEscenario.getLogica().MoverDerecha(miCelda, this);
-    	miCelda.setBomberman(this);    	
-    	if(miCelda.tieneEnemigos())
-    		this.morir();
+    	miGrafica.SetImagen(CONSTANTES.B_MirarDerecha, this);
+    	
     }
     public void moverIzquierda() {
-        // TODO implement here
-    	miCelda.eliminarBomberman(this);
-    	System.out.print("Bomberman ");
+        
+    	
     	miEscenario.getLogica().MoverIzquierda(miCelda, this);
-   		miCelda.setBomberman(this);
-       	if(miCelda.tieneEnemigos())
-    		this.morir();
+    	miGrafica.SetImagen(CONSTANTES.B_MirarIzquierda, this);
+   		
     }
    
     
