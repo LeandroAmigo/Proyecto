@@ -184,6 +184,8 @@ public class GUI extends JFrame {
 		grilla.remove(grafico);
 		grilla.repaint();
 	}
+	public PanelEscenario getPanelEscenario()
+	{return grilla;}
 	
 
 }

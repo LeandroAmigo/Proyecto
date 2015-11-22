@@ -16,20 +16,20 @@ public class ParedGrafica {
 	protected int columna;
 	protected GUI gui;
 	protected int MiImagen;
-	protected int explociones;
+	//protected int explociones;
 	
 	public ParedGrafica(int x, int y,GUI gui)
 	{	
 		this.gui=gui;
 		this.fila=y*ancho;
 		this.columna=x*alto;
-		explociones=0;
+		//explociones=0;
 		misImagenes=new Icon [4];
 		misImagenes[0]=new ImageIcon(this.getClass().getResource("/Imagenes/Indestructible.png"));
 		misImagenes[1]=new ImageIcon(this.getClass().getResource("/Imagenes/Destructible.png"));
 		misImagenes[2]=new ImageIcon(this.getClass().getResource("/Imagenes/Transitable.png"));
 		misImagenes[3]=new ImageIcon(this.getClass().getResource("/Imagenes/Explosion.png"));
-		
+		gui.addPanelEscenario(getGrafico(), 0);
 				
 	}
 	public void setGrafico(int Imagen)
@@ -42,25 +42,29 @@ public class ParedGrafica {
 				this.grafico =new JLabel(misImagenes[CONSTANTES.P_Indestructible]);
 				this.grafico.setBounds(this.fila, this.columna, this.ancho, this.alto);
 				gui.addPanelEscenario(getGrafico(), 0);
+				gui.getPanelEscenario().repaint();
 				break;
 		case CONSTANTES.P_Destructible:
 				gui.removePanelEscenario(getGrafico());
 				this.grafico =new JLabel(misImagenes[CONSTANTES.P_Destructible]);
 				this.grafico.setBounds(this.fila, this.columna, this.ancho, this.alto);
 				gui.addPanelEscenario(getGrafico(), 0);
+				gui.getPanelEscenario().repaint();
 				break;
 		case CONSTANTES.P_Transitable:
-			gui.removePanelEscenario(getGrafico());
-			this.grafico =new JLabel(misImagenes[CONSTANTES.P_Transitable]);
-			this.grafico.setBounds(this.fila, this.columna, this.ancho, this.alto);
-			gui.addPanelEscenario(getGrafico(), 0);
+				gui.removePanelEscenario(getGrafico());
+				this.grafico =new JLabel(misImagenes[CONSTANTES.P_Transitable]);
+				this.grafico.setBounds(this.fila, this.columna, this.ancho, this.alto);
+				gui.addPanelEscenario(getGrafico(), 0);
+				gui.getPanelEscenario().repaint();
 				break;
 		case CONSTANTES.B_Explosion:
-			explociones++;
+			if(graficoBomba!=null)
+				gui.removePanelEscenario(graficoBomba);
 			this.graficoBomba =new JLabel(misImagenes[CONSTANTES.B_Explosion]);
 			this.graficoBomba.setBounds(this.fila, this.columna, this.ancho, this.alto);
 			gui.addPanelEscenario(graficoBomba, 1);
-				break;
+			break;
 		}
 		
 		
@@ -74,14 +78,12 @@ public class ParedGrafica {
 	
 	public void Restaurar()
 	{
-		while(explociones!=0)
-		{	gui.removePanelEscenario(graficoBomba);
-			explociones--;
-		}
+		gui.removePanelEscenario(graficoBomba);
+	
+	
 		if(MiImagen==CONSTANTES.P_Destructible)
 		{	System.out.println("Entre a destruir una destructible");
-			gui.removePanelEscenario(grafico);
-			 			
+			//gui.removePanelEscenario(grafico);	
 			setGrafico(CONSTANTES.P_Transitable);
 			
 		}

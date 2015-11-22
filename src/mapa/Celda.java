@@ -105,7 +105,7 @@ public class Celda {
         return this.miEscenario;
     }
     
-    public void destruir() {
+    public boolean destruir() {
     	
     	miGrafica.setGrafico(CONSTANTES.B_Explosion);
     	
@@ -116,7 +116,7 @@ public class Celda {
     			personajes.get(i).morir();
       		}
       	}
-      	miContenido.Destruir(this);
+      	return miContenido.Destruir(this);
       	
    
     }

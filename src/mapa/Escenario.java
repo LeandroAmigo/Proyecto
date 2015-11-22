@@ -217,38 +217,74 @@ public class Escenario {
     
     	
     }
-    
+    /**
+     * Retorna una lista de celdas adyacentes a la pasada por parametro..
+     * La longitud de la lista es Alcance*4
+     * donde las celdas adyacentes se encuentran ubicadas:
+     * 			Celdas adyacentes Arriba desde 0 a Alcance-1
+     * 			Celdas adyacentes Abajo desde Alcance a Alcance*2-1 
+     * 			Celdas adyacentes Arriba desde Alcance*2 a Alcance*3-1 
+     * 			Celdas adyacentes Arriba desde Alcance*3 a Alcance*4-1  
+     * En caso de que el alcance caiga fuera de la grilla se completa con celdas nulas.
+     * 
+     * @param c
+     * @param alcance
+     * @return
+     */
     public LinkedList<Celda> getAdyacentes(Celda c, int alcance)
     {	int filaAux;
     	int columnaAux;
     	Celda adyacente;
     	LinkedList<Celda> lista=new LinkedList<Celda>();
     	for(int i=1;i<alcance+1;i++)
-    	{
-    		filaAux=c.getFila()-i;
-    		
-    		
+    	{	filaAux=c.getFila()-i;
     		if(filaAux>=0)
     		{	
     			adyacente= getPosicion(filaAux,c.getColumna());//celda arriba
     			lista.add(adyacente);
+    		}else
+    		{
+    			adyacente= null;
+    			lista.add(adyacente);
     		}
+    	}
+    	for(int i=1;i<alcance+1;i++)
+    	{	
     		filaAux=c.getFila()+i;
     		if(filaAux<this.Ancho)
     		{
     			adyacente= getPosicion(filaAux,c.getColumna());//celda abajo
     			lista.add(adyacente);
-    		}	
+    		}else
+    		{
+    			adyacente= null;
+    			lista.add(adyacente);
+    		}
+    	}
+    	for(int i=1;i<alcance+1;i++)
+    	{
     		columnaAux=c.getColumna()-i;
     		if(columnaAux>=0)
     		{	
     			adyacente= getPosicion(c.getFila(),columnaAux);//celda derecha
     			lista.add(adyacente);
+    		}else
+    		{
+    			adyacente= null;
+    			lista.add(adyacente);
     		}
+    		
+    	}
+    	for(int i=1;i<alcance+1;i++)
+    	{
     		columnaAux=c.getColumna()+i;
     		if(columnaAux<=this.Largo-1)
     		{	
     			adyacente= getPosicion(c.getFila(),columnaAux);//celda izquierda
+    			lista.add(adyacente);
+    		}else
+    		{
+    			adyacente= null;
     			lista.add(adyacente);
     		}
     	}

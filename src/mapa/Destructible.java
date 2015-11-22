@@ -55,7 +55,7 @@ public class Destructible extends Contenido{
         // TODO implement here
     	c.setContenido(new Transitable(fila,columna));
     	  	
-       	return true;
+       	return false;
     }
 
 	

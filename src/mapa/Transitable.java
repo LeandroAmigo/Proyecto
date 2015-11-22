@@ -59,7 +59,7 @@ public class Transitable extends Contenido{
      */
     public boolean  Destruir(Celda c){
         // TODO implement here
-      	return false;
+      	return true;
     }
  
    
