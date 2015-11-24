@@ -6,6 +6,14 @@ import javax.swing.JLabel;
 
 
 
+
+
+
+
+
+
+
+import logica.CONSTANTES;
 import personajes.Personaje;
 
 public class EntidadGrafica extends Thread {
@@ -70,62 +78,71 @@ public class EntidadGrafica extends Thread {
 	public  void SetImagen(int direccion,Personaje p) {
 		
 		this.miImagen.setIcon(this.misImagenes[direccion]);
-		posX=p.getPosicion().getColumna()*ancho;
-		posY=p.getPosicion().getFila()*alto;
-		//mover(direccion);
-		this.miImagen.setBounds(this.posX, this.posY,this.ancho,this.alto);
+		//posX=p.getPosicion().getColumna()*ancho;
+		//posY=p.getPosicion().getFila()*alto;
+		//this.miImagen.setBounds(this.posX, this.posY,this.ancho,this.alto);
+		mover(direccion);
+		
 		
 	}	
 	
+	
 	public void mover(int direccion) {
 		this.miImagen.setIcon(this.misImagenes[direccion]);
+		int posXaux =entidad.getPosicion().getFila()*ancho;
+		int posYaux=entidad.getPosicion().getColumna()*alto;
 		switch (direccion) {
-			case 0 : { // Derecha
-				//try {
-					for (int i = 0; i < this.alto; i ++)
+			case CONSTANTES.B_MirarDerecha : { // Derecha
+				try {
+					while(posY < posYaux)
 					{
-						this.miImagen.setBounds(this.posX, this.posY+=i, ancho, alto);
-						//hilo.sleep(05);
+						this.miImagen.setBounds(this.posY+1, this.posX, ancho, alto);
+						this.posY++;
+						Thread.sleep(10);
+						gui.repaint();
 					}
-				//} catch (InterruptedException e) {
-				//	e.printStackTrace();
-				//}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				break;
 			}
-			case 1 : { // Izquierda				
-				//try {
-					for (int i = 0; i < this.alto; i ++) 
-					{
-						this.miImagen.setBounds(this.posX, this.posY -= i, ancho, alto);
-					//	hilo.sleep(05);
-					}
-				//} catch (InterruptedException e) {
-					//e.printStackTrace();
-				//}
+			case CONSTANTES.B_MirarIzquierda : { // Izquierda				
+				try {
+						while(posY > posYaux)
+						{
+						this.miImagen.setBounds(this.posY-1, this.posX, ancho, alto);
+						this.posY--;
+						Thread.sleep(10);
+						}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				break;
 			}				
-			case 2 : { // Arriba				
-				//try {
-					for (int i = 0; i < this.alto; i ++)
+			case CONSTANTES.B_MirarArriba : { // Arriba				
+				try {
+					while(posX > posXaux)
 					{
-						this.miImagen.setBounds(this.posX -= i, this.posY, ancho, alto);
-					//	hilo.sleep(05);
+						this.miImagen.setBounds(this.posY, this.posX-1, ancho, alto);
+						posX--;
+						Thread.sleep(10);
 					}
-				//} catch (InterruptedException e) {
-					//e.printStackTrace();
-				//}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				break;
 			}				
-			case 3 : { // Abajo				
-				//try {
-					for (int i = 0; i < this.alto; i ++) 
+			case CONSTANTES.B_MirarAbajo : { // Abajo				
+				try {
+					while(posX < posXaux)
 					{
-						this.miImagen.setBounds(this.posX+= i,this.posY, ancho, alto);
-					//	hilo.sleep(05);
+						this.miImagen.setBounds(this.posY,this.posX+1, ancho, alto);
+						this.posX++;
+						Thread.sleep(10);
 					}
-				//} catch (InterruptedException e) {
-				//	e.printStackTrace();
-				//}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				break;
 			}
 		}

@@ -40,6 +40,7 @@ public class Celda {
     	this.miContenido=c;
     	this.personajes = new LinkedList<Personaje>();
     	this.miGrafica=new ParedGrafica(fila,columna,e.getGui());
+    	miPowerUp=null;
      	
     }
 
@@ -75,10 +76,11 @@ public class Celda {
    
     public Boolean tienePowerUp() {
        
-        return null;
+        return miPowerUp!=null;
     }
-    public void getPowerUp(Bomberman b) {
-       
+    public void ActivarPowerUp(Bomberman b) {
+         if (miPowerUp!=null) 
+        	 miPowerUp.getPowerUp(b);
     }
     /**
      * 
@@ -106,23 +108,29 @@ public class Celda {
     }
     
     public boolean destruir() {
-    	
+    	boolean dest=false;
     	miGrafica.setGrafico(CONSTANTES.B_Explosion);
     	
     	if(!personajes.isEmpty())
-    	{    		
+    	{   dest=true; 		
     		for(int i=0;i<personajes.size();i++)
     		{
-    			personajes.get(i).morir();
+    			personajes.get(i).morir();    		   			
       		}
       	}
-      	return miContenido.Destruir(this);
-      	
+      	boolean d=miContenido.Destruir(this);
+      	dest= dest || d;
+      	//personajes.removeAll(personajes);
+      	return dest;
    
     }
     public void restaurar()
     {
       		miGrafica.Restaurar();
+      		if (miPowerUp!=null)
+      		{
+      			miPowerUp.getGrafico().aparecer();
+       		}
    
     }
    /**
@@ -156,7 +164,7 @@ public class Celda {
     public void eliminarBomberman(Bomberman b)
     {
     	personajes.remove(b);
-      	miBomberman=null;;
+      	miBomberman=null;
     }
     
     /**

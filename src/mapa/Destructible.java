@@ -54,6 +54,10 @@ public class Destructible extends Contenido{
     public boolean Destruir(Celda c) {
         // TODO implement here
     	c.setContenido(new Transitable(fila,columna));
+    	if(c.tieneEnemigos())
+    	{
+    		
+    	}
     	  	
        	return false;
     }

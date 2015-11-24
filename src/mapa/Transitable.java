@@ -40,6 +40,8 @@ public class Transitable extends Contenido{
     	b.getPosicion().eliminarBomberman(b);//Elimino al bomberman de su celda acual
     	b.setPosicion(c);//Seteo en la nueva celda
     	c.setBomberman(b);//seteo al bomberman en la nueva celda
+    	if(c.tienePowerUp())
+    		c.ActivarPowerUp(b);
       	if(c.tieneEnemigos())
     		b.morir();
       	

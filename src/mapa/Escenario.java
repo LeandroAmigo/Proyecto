@@ -12,6 +12,11 @@ import personajes.Bomberman;
 import personajes.Personaje;
 import personajes.Rugulos;
 import personajes.Sirius;
+import powerUp.Bombality;
+import powerUp.Fatality;
+import powerUp.Masacrality;
+import powerUp.PowerUp;
+import powerUp.SpeedUp;
 
 /**
  * 
@@ -37,10 +42,6 @@ public class Escenario {
     
     }
 
-    public void setPosicion(int fila,int columna,Celda c) 
-    {
-       
-    }
     /**
      *  Retorna la celda que se encuentra en la posicion dada en la grilla  
      * @param fila
@@ -52,50 +53,14 @@ public class Escenario {
          return miMatriz[fila][columna];
     }
 
-    public Collection<Sirius> getSirius()
-    {
-        
-        return null;
-    }
-
-    public Sirius getSirius(Sirius s)
-    {
-        
-        return null;
-    }
-
     public void eliminarSirius(Sirius s)
     {
         
     }
 
-    public Collection<Altair> getAltair()
-    {
-       
-        return null;
-    }
-
-    public Altair getAltair(Altair a) 
-    {
-        
-        return null;
-    }
-
     public void eliminarAltair(Altair a)
     {
-        
-    }
-
-    public Collection<Rugulos> getRugulos() 
-    {
-       
-        return null;
-    }
-
-    public Rugulos getRugulos(Rugulos r) 
-    {
-       
-        return null;
+        misAltair.remove(a);
     }
 
     public void eliminarRugulos(Rugulos r) 
@@ -107,8 +72,7 @@ public class Escenario {
      * @return Bomberman
      */
     public Bomberman getBomberman()
-    {
-        
+    {        
         return this.bomberman;
     }
     public void sumarPuntos(int p) 
@@ -163,8 +127,14 @@ public class Escenario {
     {	
     	
     	this.miMatriz = new Celda[this.Ancho][this.Largo];
-    	int cantDestructibles = 10;
+    	int cantDestructibles = 20;//Tiene que ser mayor a la cantidad de powerUp totales
     	boolean estanTodas = false;
+    	int cantSpeedUp=4;
+    	int cantFatality=3;
+    	int cantBombality=3;
+    	int cantMasacrality=1;
+    	int colocarPowerUp;
+    	int cantPowerUp=cantSpeedUp+cantFatality+cantBombality+cantMasacrality;
     	Random random = new Random();
     	int fila;
     	int columna;
@@ -199,6 +169,46 @@ public class Escenario {
 				cantDestructibles--;
     		}
     		estanTodas = (cantDestructibles == 0);
+    		
+    		colocarPowerUp=random.nextInt(1);
+    		if(cantDestructibles<=cantPowerUp || colocarPowerUp==1)
+    		{
+    			if(cantSpeedUp>0)
+    			{	
+    				PowerUp s=new SpeedUp(miMatriz[fila][columna]);
+    				this.miMatriz[fila][columna].setPowerUp(s);
+    				cantSpeedUp--;
+    				
+    			
+    			}else{
+    					if(cantFatality>0)
+    					{	PowerUp f=new Fatality(miMatriz[fila][columna]);
+    						this.miMatriz[fila][columna].setPowerUp(f);
+    						cantFatality--;
+    						
+    						
+    					}else{
+    						  if(cantBombality>0)
+    						  {
+    							  PowerUp b=new Bombality(miMatriz[fila][columna]);
+    							  this.miMatriz[fila][columna].setPowerUp(b);
+    							  cantBombality--;
+    							  
+    						  }
+    						  else{
+    							  if(cantMasacrality>0)
+    							  {
+    								  PowerUp m=new Masacrality(miMatriz[fila][columna]);
+    								  this.miMatriz[fila][columna].setPowerUp(m);
+    								  cantMasacrality--;
+    								  
+    							  }
+    						  	  }
+    						 }
+    			}
+    	    cantPowerUp--;
+    		}				
+    		
     	}
     	
     	// Se generan los transitables en las posiciones restantes

@@ -31,7 +31,7 @@ public class Bomba implements Runnable {
     public Bomba(Celda c, int alcance) {
         // TODO implement here
     	this.miCelda=c;
-    	b=miCelda.getBomberman();
+    	b=miCelda.getEscenario().getBomberman();
      	this.Alcance=alcance;
      	//ExplosionGrafica=new Explotar(c.getEscenario().getGui());
     	this.miGrafica = new BombaGrafica(c.getFila(), c.getColumna(),c.getEscenario().getGui());
@@ -65,6 +65,7 @@ public class Bomba implements Runnable {
     		    	    		
     	}
     */	
+    	b.SetCantBombas(b.GetCantBombas()+1);
     	LinkedList<Celda> Destruidas=new LinkedList<Celda>();
     	boolean seguir=true;
     	int i=0;
@@ -72,8 +73,7 @@ public class Bomba implements Runnable {
     	{
     		if(c1.get(i)!=null)
     		{	
-    			seguir=c1.get(i).destruir() && (i<Alcance-1);
-    			
+    			seguir=c1.get(i).destruir() && (i<Alcance-1);    			
     			Destruidas.add(c1.get(i));
     			i++;
     		}else
@@ -116,8 +116,7 @@ public class Bomba implements Runnable {
     			seguir=false;
     	}
     		
-    	miCelda.destruir();
-    	b.SetCantBombas(b.GetCantBombas()+1);
+    	miCelda.destruir();    	
     	Destruidas.add(miCelda);
     	
     	return Destruidas;
@@ -129,8 +128,7 @@ public class Bomba implements Runnable {
    	    miCelda.restaurar();	
     	for(int i=0; i<c1.size();i++)
     	{
-    		Celda a=c1.get(i);
-    		a.restaurar();   		
+    		c1.get(i).restaurar();   		
     	}
     
     }
@@ -141,7 +139,7 @@ public class Bomba implements Runnable {
         // TODO implement here
         return miCelda;
     }
-    //CAMBIAR EN EL DIAGRAMA RETRASO POR RUN
+    
     public void run() {
     	try {
     		LinkedList<Celda> c1=miCelda.getEscenario().getAdyacentes(miCelda,Alcance);

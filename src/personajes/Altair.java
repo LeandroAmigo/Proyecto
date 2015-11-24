@@ -76,16 +76,19 @@ public class Altair extends Enemigo{
      */
     public void morir()
     {
+    	
     try{
     	System.out.println("Murio ALTAIR");
     	miCelda.eliminarEnemigoDeLaCelda(this);
     	miGrafica.Morir();
     	miEscenario.eliminarAltair(this);
-    	miHilo.sleep(0000);
-    	miGrafica.Eliminar();
     	miHilo.detener();
+    	miHilo.sleep(5000);    	
+    	miGrafica.Eliminar();
+    	
     }catch(InterruptedException e){}
     }
+    
     public void SetHilo(MaloThread hilo)
     {
     	this.miHilo=hilo;
