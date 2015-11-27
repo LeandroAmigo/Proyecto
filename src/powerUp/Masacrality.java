@@ -30,7 +30,9 @@ public class Masacrality extends PowerUp{
      */
     public void getPowerUp(Bomberman b){
     	System.out.println("MASACRALITY");
+    	miCelda.getEscenario().sumarPuntos(50);
     	miCelda.setPowerUp(null);
+    	
     	b.SetMasacrality(true);    	
     	miGrafica.desaparecer();
     }

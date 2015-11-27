@@ -10,7 +10,8 @@ import mapa.Celda;
 import mapa.Escenario;
 
 public abstract class Personaje
-{
+{	
+	protected Thread miHilo;
 	protected int velocidad;
 	protected Celda miCelda;
 	protected Escenario miEscenario;
@@ -50,5 +51,7 @@ public abstract class Personaje
 	{
 		return false;
 	}
+	
+	public Thread getHilo(){return miHilo;}
 	
 }

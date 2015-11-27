@@ -12,6 +12,7 @@ import logica.BombermanThread;
 import logica.CONSTANTES;
 import logica.Logica;
 import logica.MaloThread;
+import logica.MasacralityThread;
 import mapa.Celda;
 import mapa.Escenario;
 import bomba.Bomba;
@@ -24,17 +25,22 @@ public class Bomberman extends Personaje {
     
     protected int alcanceBomba;
     
-    protected Thread miHilo;
+    protected BombermanThread miHilo;
 
     public Bomberman(Escenario e,int fila,int col){
 
     	super(e);
+    	velocidad=1;
     	miHilo=new BombermanThread(this);
+    	miHilo.start();
+    	
     	cantBombas=1;
     	inmune=false;
     	alcanceBomba=1;
     	this.miCelda=e.getPosicion(fila, col);
     	this.miGrafica=new EntidadGrafica(this,fila,col,e.getGui());
+    	
+    	miGrafica.setHilo(miHilo);
     	
     	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanDerecha.jpg")));
     	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/bombermanIzquierda.jpg")));
@@ -50,6 +56,7 @@ public class Bomberman extends Personaje {
     	if(cantBombas>0)
     	{	
     		cantBombas--;
+    		System.out.println("BOMBAS: "+cantBombas);
     	    Bomba b=new Bomba(miCelda,alcanceBomba);
     		Thread hilo = new Thread(b);
         	hilo.start();
@@ -60,6 +67,7 @@ public class Bomberman extends Personaje {
     public void SetVelocidad(int v) {
      
     	velocidad=v;
+    	System.out.println("VELOCIDAD: "+v );
     }
     
     public boolean atraviesaPared()
@@ -70,6 +78,12 @@ public class Bomberman extends Personaje {
     public void SetMasacrality(boolean m)
     {
     	inmune=m;
+    	if(m==true)
+    	{	
+    		MasacralityThread masacrality=new MasacralityThread(this);
+    		masacrality.start();
+    		masacrality.detener();
+    	}	
     }
     
     public void SetCantBombas(int cant) {
@@ -92,37 +106,58 @@ public class Bomberman extends Personaje {
         return cantBombas;
     }
     public void morir() {
-        
-    	System.out.println("Murio BOMBERMAN");
-    	miCelda.eliminarBomberman(this);
-    	miGrafica.Morir();
+       if (!inmune)
+       {   
+    	   System.out.println("Murio BOMBERMAN");
+    	   miCelda.eliminarBomberman(this);
+    	   miHilo.detener();
+    	   //miGrafica.Morir();
+    	   miEscenario.getGui().TERMINARJUEGO();
+       }
     }
     
     public void moverArriba()
-    {	
-    	
-    		miEscenario.getLogica().MoverArriba(miCelda, this);   		
-    		miGrafica.SetImagen(CONSTANTES.B_MirarArriba, this);
+    {	if(miHilo.puedeMoverse())
+		{
+     	    miEscenario.getLogica().MoverArriba(miCelda, this);  
+     	    miHilo.Setdireccion(CONSTANTES.B_MirarArriba);
+     	    miHilo.moverse(true);
+		}    
+    		//miGrafica.SetImagen(CONSTANTES.B_MirarArriba, this);
     		
     }
     
     public void moverAbajo() {
-       
-    	miEscenario.getLogica().MoverAbajo(miCelda, this);
-    	miGrafica.SetImagen(CONSTANTES.B_MirarAbajo, this);
+    	if(miHilo.puedeMoverse())
+    	{
+    		miEscenario.getLogica().MoverAbajo(miCelda, this);
+    	    miHilo.Setdireccion(CONSTANTES.B_MirarAbajo);
+    	    miHilo.moverse(true);
+    	}//miGrafica.SetImagen(CONSTANTES.B_MirarAbajo, this);
     	
     }
     public void moverDerecha() {
        
-    	miEscenario.getLogica().MoverDerecha(miCelda, this);
-    	miGrafica.SetImagen(CONSTANTES.B_MirarDerecha, this);
+    	if(miHilo.puedeMoverse())
+    	{	
+    		miEscenario.getLogica().MoverDerecha(miCelda, this);    	
+    		miHilo.Setdireccion(CONSTANTES.B_MirarDerecha);
+    		miHilo.moverse(true);
+    	}	
+    	//miGrafica.SetImagen(CONSTANTES.B_MirarDerecha, this);
     	
     }
     public void moverIzquierda() {
-        miEscenario.getLogica().MoverIzquierda(miCelda, this);
-    	miGrafica.SetImagen(CONSTANTES.B_MirarIzquierda, this);
+    	if(miHilo.puedeMoverse())
+    	{
+    		miEscenario.getLogica().MoverIzquierda(miCelda, this);
+       	    miHilo.Setdireccion(CONSTANTES.B_MirarIzquierda);
+       	    miHilo.moverse(true);
+    	}
+    	//miGrafica.SetImagen(CONSTANTES.B_MirarIzquierda, this);
     	
     }
+    
    
     
 }

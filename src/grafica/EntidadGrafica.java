@@ -38,7 +38,6 @@ public class EntidadGrafica extends Thread {
 	 */
 	public EntidadGrafica(Personaje p,int posX,int posY,GUI gui)
 	{
-		hilo=new Thread();
 		entidad=p;
 		this.gui=gui;
 		this.misImagenes=new Icon [5];
@@ -78,13 +77,18 @@ public class EntidadGrafica extends Thread {
 	public  void SetImagen(int direccion,Personaje p) {
 		
 		this.miImagen.setIcon(this.misImagenes[direccion]);
-		//posX=p.getPosicion().getColumna()*ancho;
-		//posY=p.getPosicion().getFila()*alto;
-		//this.miImagen.setBounds(this.posX, this.posY,this.ancho,this.alto);
 		mover(direccion);
 		
 		
 	}	
+	public void setHilo(Thread h){
+		hilo=h;
+	}
+	
+	private int velocidad()
+	{	
+		return  20-entidad.getVelocidad();
+	}
 	
 	
 	public void mover(int direccion) {
@@ -98,11 +102,12 @@ public class EntidadGrafica extends Thread {
 					{
 						this.miImagen.setBounds(this.posY+1, this.posX, ancho, alto);
 						this.posY++;
-						Thread.sleep(10);
+						hilo.sleep(velocidad());
 						gui.repaint();
 					}
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
+					//hilo.interrupt();
 				}
 				break;
 			}
@@ -112,10 +117,11 @@ public class EntidadGrafica extends Thread {
 						{
 						this.miImagen.setBounds(this.posY-1, this.posX, ancho, alto);
 						this.posY--;
-						Thread.sleep(10);
+						hilo.sleep(velocidad());
 						}
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
+					//hilo.interrupt();
 				}
 				break;
 			}				
@@ -125,10 +131,11 @@ public class EntidadGrafica extends Thread {
 					{
 						this.miImagen.setBounds(this.posY, this.posX-1, ancho, alto);
 						posX--;
-						Thread.sleep(10);
+						hilo.sleep(velocidad());
 					}
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
+					//hilo.interrupt();
 				}
 				break;
 			}				
@@ -138,10 +145,11 @@ public class EntidadGrafica extends Thread {
 					{
 						this.miImagen.setBounds(this.posY,this.posX+1, ancho, alto);
 						this.posX++;
-						Thread.sleep(10);
+						hilo.sleep(velocidad());
 					}
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
+					//hilo.interrupt();
 				}
 				break;
 			}

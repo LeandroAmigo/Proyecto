@@ -33,7 +33,8 @@ public class Bombality extends PowerUp
     public void getPowerUp(Bomberman b) {
         // TODO implement here
     	int cant= b.GetCantBombas();
-        b.SetCantBombas(cant++); 
+        b.SetCantBombas(++cant); 
+        System.out.println("BOMBALITY: "+cant);
         miCelda.getEscenario().sumarPuntos(puntaje());
         miCelda.setPowerUp(null);
         miGrafica.desaparecer();

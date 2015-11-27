@@ -25,6 +25,7 @@ public class Altair extends Enemigo{
     	super(e);
     	this.miCelda=e.getPosicion(fila, col);
     	miGrafica=new EntidadGrafica(this,fila,col,e.getGui());
+    	  
     	
     	//SETEO TODO CON LA MISMA IMAGEN! DESPUES HAY QUE PONERLE BIEN CADA UNA
     	this.miGrafica.InicializarImagen(new ImageIcon(this.getClass().getResource("/Imagenes/Altair.jpg")));
@@ -77,20 +78,25 @@ public class Altair extends Enemigo{
     public void morir()
     {
     	
-    try{
+    //try{
     	System.out.println("Murio ALTAIR");
-    	miCelda.eliminarEnemigoDeLaCelda(this);
-    	miGrafica.Morir();
-    	miEscenario.eliminarAltair(this);
     	miHilo.detener();
-    	miHilo.sleep(5000);    	
+    	miGrafica.setHilo(null);
+    	miCelda.eliminarEnemigoDeLaCelda(this);
+    	//miGrafica.Morir();
+    	miEscenario.eliminarAltair(this);
+     	//miHilo.dormir(1500);    	
     	miGrafica.Eliminar();
+    	miEscenario.sumarPuntos(20);
     	
-    }catch(InterruptedException e){}
+   //}catch(InterruptedException e){}
     }
     
     public void SetHilo(MaloThread hilo)
     {
     	this.miHilo=hilo;
+    	miGrafica.setHilo(hilo);
     }
+
+    public boolean atraviesaPared(){return true;}
 }

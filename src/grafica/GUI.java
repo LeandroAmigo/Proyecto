@@ -96,6 +96,7 @@ public class GUI extends JFrame {
 
 	private JFrame frame;
 	private PanelEscenario grilla;
+	private PanelPuntajes puntaje;
 	
 	private Escenario escenario;
 	
@@ -130,7 +131,7 @@ public class GUI extends JFrame {
 		frame = new JFrame();
 		frame.setTitle("Bomberman");
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 998,446); 
+		frame.setBounds(100, 100, 998,476); 
 		frame.setLocationRelativeTo(null);
 		frame.setLayout(null);
 		frame.getContentPane().setBackground(Color.BLACK);
@@ -138,6 +139,9 @@ public class GUI extends JFrame {
 		grilla = new PanelEscenario();
 		grilla.setLocation(0,0);
 		frame.add(grilla);
+		puntaje = new PanelPuntajes();
+		puntaje.setLocation(0,416);
+		frame.add(puntaje);
 		
 		escenario=new Escenario(this);
 		
@@ -188,4 +192,35 @@ public class GUI extends JFrame {
 	{return grilla;}
 	
 
+	public void addPanelPuntaje(JLabel Imagen)
+	{
+		puntaje.add(Imagen);
+		puntaje.repaint();
+	}
+	public void removePanelPuntaje(JLabel grafico)
+	{
+		puntaje.remove(grafico);
+		puntaje.repaint();
+	}
+	public PanelPuntajes getPanelPuntaje()
+	{return puntaje;}
+	
+	public void ActualizarTiempo(int t){
+		puntaje.ActualizarTiempo(t);   }
+
+	public void ActualizarPuntos(int p){
+		puntaje.ActualizarPuntos(p);   }
+	
+	public void TERMINARJUEGO(){
+		escenario.PararHilos();
+		JLabel imagen=new JLabel();
+		imagen.setIcon(new ImageIcon(this.getClass().getResource("/Imagenes/FinDelJuego.jpg")));
+		imagen.setBounds(0,-50, 998, 496);
+		this.addPanelEscenario(imagen, 1);
+		this.repaint();
+		
+		
+	}
+	
+	
 }

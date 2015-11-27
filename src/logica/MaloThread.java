@@ -43,12 +43,9 @@ public class MaloThread extends Thread {
 		// Seteamos el flag para detener su ejecución.
 		this.mDetener = true;
 	}
-	
-	public void destruir() {
-		// Detengo la ejecucion del hilo.
-		this.detener();
-		
-		// Notificamos a la logica que este hilo se destruyo.
-		this.enemigo.morir();
+	public void dormir(int a) throws InterruptedException
+	{
+		this.sleep(a);
 	}
+	
 }

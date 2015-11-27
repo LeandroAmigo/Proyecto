@@ -27,8 +27,9 @@ public class ParedGrafica {
 		misImagenes=new Icon [4];
 		misImagenes[0]=new ImageIcon(this.getClass().getResource("/Imagenes/Indestructible.png"));
 		misImagenes[1]=new ImageIcon(this.getClass().getResource("/Imagenes/Destructible.png"));
-		misImagenes[2]=new ImageIcon(this.getClass().getResource("/Imagenes/Transitable.png"));
+		misImagenes[2]=new ImageIcon(this.getClass().getResource("/Imagenes/Transitable.jpg"));
 		misImagenes[3]=new ImageIcon(this.getClass().getResource("/Imagenes/Explosion.png"));
+		
 		gui.addPanelEscenario(getGrafico(), 0);
 				
 	}
@@ -38,27 +39,28 @@ public class ParedGrafica {
 		switch(Imagen)
 		{
 		case CONSTANTES.P_Indestructible:
-				if(grafico!=null)
-					gui.removePanelEscenario(grafico);
-				this.grafico =new JLabel(misImagenes[CONSTANTES.P_Indestructible]);
+				//if(grafico!=null)
+				//	gui.removePanelEscenario(grafico);
+				this.grafico.setIcon(misImagenes[0]); //=new JLabel(misImagenes[CONSTANTES.P_Indestructible]);
 				this.grafico.setBounds(this.fila, this.columna, this.ancho, this.alto);
-				gui.addPanelEscenario(getGrafico(), 0);
+				//gui.addPanelEscenario(getGrafico(), 0);
 				gui.getPanelEscenario().repaint();
 				break;
 		case CONSTANTES.P_Destructible:
-				if(grafico!=null)
-					gui.removePanelEscenario(grafico);
-				this.grafico =new JLabel(misImagenes[CONSTANTES.P_Destructible]);
+				//if(grafico!=null)
+				//	gui.removePanelEscenario(grafico);
+				this.grafico.setIcon(misImagenes[1]);//this.grafico =new JLabel(misImagenes[CONSTANTES.P_Destructible]);
 				this.grafico.setBounds(this.fila, this.columna, this.ancho, this.alto);
-				gui.addPanelEscenario(getGrafico(), 0);
+				//gui.addPanelEscenario(getGrafico(), 0);
 				gui.getPanelEscenario().repaint();
 				break;
 		case CONSTANTES.P_Transitable:
-				if(grafico!=null)
-					gui.removePanelEscenario(grafico);
-				this.grafico =new JLabel(misImagenes[CONSTANTES.P_Transitable]);
-				this.grafico.setBounds(this.fila, this.columna, this.ancho, this.alto);
-				gui.addPanelEscenario(getGrafico(), 0);
+				//if(grafico!=null)
+				//	gui.removePanelEscenario(grafico);
+				//this.grafico =new JLabel(misImagenes[CONSTANTES.P_Transitable]);
+				this.grafico.setIcon(misImagenes[2]);
+				this.grafico.setBounds(this.fila, this.columna, this.ancho, this.alto);				
+				//gui.addPanelEscenario(getGrafico(), 0);
 				gui.getPanelEscenario().repaint();
 				break;
 		case CONSTANTES.B_Explosion:

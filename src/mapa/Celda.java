@@ -138,7 +138,10 @@ public class Celda {
     * @return retorna si existen enemigos en la celda
     */
     public boolean tieneEnemigos() {
-    	  return personajes.size()!=1;//es distinto de 1 porque ya posee al bomberman
+    	System.out.println("CANT PERSONAJES : "+personajes.size());  
+    	return personajes.size()!=1;
+    	  
+    	  //es distinto de 1 porque ya posee al bomberman
     }
     /**
      * 

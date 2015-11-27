@@ -9,6 +9,8 @@ public class BombermanThread extends Thread {
 	
 	// Logica que implementa al malo.
 	private Bomberman bomberman;
+	private boolean mover;
+	private int direccion;
 	
 	// Flag que indica cuando debe detenerse la ejecución del hilo.
 	// Es volatile porque es accedida desde concurrentemente desde diferentes threads.
@@ -16,7 +18,8 @@ public class BombermanThread extends Thread {
 	
 	public BombermanThread(Bomberman b) {
 		this.bomberman  = b;
-		this.mDetener = false;
+		this.mover = false;
+		direccion=1;
 	}
 	
 	@Override
@@ -26,10 +29,40 @@ public class BombermanThread extends Thread {
 			// Duermo el hilo 1 segundo.
 			// De esta manera cada turno se ejecuta cada 1 segundo.
 			try {
-				// Realizo el movimiento
-				//this.enemigo.mover();
-				Thread.sleep(00);
-				
+				if(mover)
+				{
+					switch (direccion) {
+					case CONSTANTES.B_MirarArriba : //Movimiento arriba
+					   		
+						bomberman.getGraficos().SetImagen(CONSTANTES.B_MirarArriba, bomberman);
+						
+						
+						break;
+					case CONSTANTES.B_MirarAbajo ://movimiento abajo
+						
+				    	bomberman.getGraficos().SetImagen(CONSTANTES.B_MirarAbajo, bomberman);
+				    	
+							
+							
+						break;
+					case CONSTANTES.B_MirarIzquierda ://movimiento izquierda
+						
+						bomberman.getGraficos().SetImagen(CONSTANTES.B_MirarIzquierda, bomberman);
+							
+						
+							break;
+					case CONSTANTES.B_MirarDerecha ://movimiento derecha
+						
+						bomberman.getGraficos().SetImagen(CONSTANTES.B_MirarDerecha, bomberman);
+						
+						
+						break;
+				}
+				mover=false;
+				}
+				else
+					Thread.sleep(50);
+							
 			} catch (InterruptedException e) { }
 		}
 	}
@@ -42,11 +75,16 @@ public class BombermanThread extends Thread {
 		this.mDetener = true;
 	}
 	
-	public void destruir() {
-		// Detengo la ejecucion del hilo.
-		this.detener();
-		
-		// Notificamos a la logica que este hilo se destruyo.
-		this.bomberman.morir();
+	public void moverse(boolean m)
+	{
+		mover=m;
+	}
+	public void Setdireccion(int dir)
+	{
+		direccion=dir;
+	}
+	public boolean puedeMoverse()
+	{
+		return !mover;
 	}
 }

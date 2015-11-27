@@ -7,6 +7,7 @@ import java.util.*;
 import logica.CONSTANTES;
 import logica.Logica;
 import logica.MaloThread;
+import logica.TiempoThread;
 import personajes.Altair;
 import personajes.Bomberman;
 import personajes.Personaje;
@@ -26,6 +27,8 @@ public class Escenario {
 	Logica miLogica;	
 	protected LinkedList<MaloThread> hilos;   
     protected int puntos;
+    protected int tiempo;
+    protected TiempoThread HiloTiempo;
     protected Celda miMatriz[][];
     protected Bomberman bomberman;
     protected LinkedList<Sirius> misSirius;
@@ -34,12 +37,16 @@ public class Escenario {
     protected GUI gui; 
     protected final int Ancho=13;
     protected final int Largo=31;
+   
     
     public Escenario(GUI gui) {
-    	   
+    	
+    	this.puntos=0;
+    	this.tiempo=0;
     	this.gui=gui;
        Inicializar();
-    
+       HiloTiempo=new TiempoThread(this);
+       HiloTiempo.start();
     }
 
     /**
@@ -52,10 +59,26 @@ public class Escenario {
     {
          return miMatriz[fila][columna];
     }
+    public void PararHilos()
+    {
+    	for(int i=0;i<hilos.size();i++)
+    	{
+    		System.out.println("Detuvo hilo");
+    		hilos.get(i).detener();
+    	}
+    	HiloTiempo.detener();
+    	
+    }
 
+    public void SumarUnSegundo(){
+    	tiempo++;
+    	gui.ActualizarTiempo(tiempo);
+    }
+    
+    
     public void eliminarSirius(Sirius s)
     {
-        
+        misSirius.remove(s);
     }
 
     public void eliminarAltair(Altair a)
@@ -65,7 +88,7 @@ public class Escenario {
 
     public void eliminarRugulos(Rugulos r) 
     {
-       
+       misRugulos.remove(r);
     }
     /**
      * Retorna bomberman
@@ -77,7 +100,8 @@ public class Escenario {
     }
     public void sumarPuntos(int p) 
     {
-        
+     this.puntos+=p; 
+     gui.ActualizarPuntos(puntos);
     }
     /**
      * retorna la logica
@@ -100,6 +124,8 @@ public class Escenario {
     	InicializarEscenario();
     	InicializarBomberman();
     	InicializarAltair();
+    	InicializarRugulos();
+    	InicializarSirius();
     	this.gui.repaint();
     }
     
@@ -110,12 +136,17 @@ public class Escenario {
     }
     
     private void InicializarAltair()
-    {   int CantAltair=2;
+    {   Random random = new Random();
+		int fila;
+		int columna;
+    	int CantAltair=2;
     	misAltair=new LinkedList<Altair>();
     	hilos=new LinkedList<MaloThread>();
         for(int i=0; i<CantAltair;i++)
     	{
-    		misAltair.add(new Altair(this,11,11));//Falta setear posicion aleatoria! 
+        	fila = random.nextInt(this.Ancho - 2) + 1; // Numero aleatorio entre 1 y cantidad de filas - 1
+    		columna = random.nextInt(this.Largo - 2) + 1; // Numero aleatorio entre 1 y cantidad de columnas - 1
+        	misAltair.add(new Altair(this,fila,columna));//Falta setear posicion aleatoria! 
     		
     		this.hilos.add(new MaloThread(misAltair.get(i)));
     		misAltair.get(i).SetHilo(hilos.get(i));
@@ -123,11 +154,45 @@ public class Escenario {
     	}
     }
     
+    private void InicializarRugulos()
+    {   
+    	Random random = new Random();
+    	int fila;
+    	int columna;
+    	int CantRugulos=3;
+    	misRugulos=new LinkedList<Rugulos>();
+    	hilos=new LinkedList<MaloThread>();
+        for(int i=0; i<CantRugulos;i++)
+    	{
+        	fila = random.nextInt(this.Ancho - 2) + 1; // Numero aleatorio entre 1 y cantidad de filas - 1
+    		columna = random.nextInt(this.Largo - 2) + 1; // Numero aleatorio entre 1 y cantidad de columnas - 1
+    		misRugulos.add(new Rugulos(this,fila,columna));//Falta setear posicion aleatoria! 
+    		
+    		this.hilos.add(new MaloThread(misRugulos.get(i)));
+    		misRugulos.get(i).SetHilo(hilos.get(i));
+     		this.hilos.get(i).start();
+    	}
+    }
+
+    private void InicializarSirius()
+    {   
+    	Random random = new Random();
+    	int fila=11;
+    	int columna=29;
+      	misSirius=new LinkedList<Sirius>();
+    	hilos=new LinkedList<MaloThread>();
+    	misSirius.add(new Sirius(this,fila,columna));    		
+    	this.hilos.add(new MaloThread(misSirius.get(0)));
+    		misSirius.get(0).SetHilo(hilos.get(0));
+     		this.hilos.get(0).start();
+    	
+    }
+    
     private void InicializarEscenario()
     {	
     	
     	this.miMatriz = new Celda[this.Ancho][this.Largo];
-    	int cantDestructibles = 20;//Tiene que ser mayor a la cantidad de powerUp totales
+    	int cantDestructibles = 15;//Tiene que ser mayor a la cantidad de powerUp totales
     	boolean estanTodas = false;
     	int cantSpeedUp=4;
     	int cantFatality=3;
