@@ -22,7 +22,7 @@ public class SpeedUp extends PowerUp{
     {
     	miCelda=c;
     	this.miGrafica= new PowerUpGrafico(miCelda.getFila(),miCelda.getColumna(),miCelda.getEscenario().getGui());
-    	Icon imagen = new ImageIcon(this.getClass().getResource("/Imagenes/SpeedUp.jpg"));
+    	Icon imagen = new ImageIcon(this.getClass().getResource("/Imagenes/speedUp.jpg"));
     	miGrafica.setImagen(imagen);
     }
 

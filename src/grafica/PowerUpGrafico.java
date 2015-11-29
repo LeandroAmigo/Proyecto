@@ -20,7 +20,9 @@ public class PowerUpGrafico {
 	public PowerUpGrafico(int fila, int columna,GUI gui) {
 		this.fila=fila;
 		this.columna=columna;					
-		this.gui = gui;		
+		this.gui = gui;	
+		this.grafico = new JLabel(imagen);
+		this.gui.addPanelEscenario(this.grafico,0);
 		
 	}
 	
@@ -30,12 +32,13 @@ public class PowerUpGrafico {
 	}
 	public void aparecer()
 	{
-		this.grafico = new JLabel(imagen);
+		grafico.setIcon(imagen);
 		this.grafico.setBounds(columna*ancho,fila*alto, ancho, alto);
-		this.gui.addPanelEscenario(this.grafico,0);
+		
 	}
 	
 	public void desaparecer() {
+		grafico.setIcon(null);
 		this.gui.removePanelEscenario(this.grafico);
 		
 	}

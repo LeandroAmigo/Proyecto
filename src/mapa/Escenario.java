@@ -44,6 +44,7 @@ public class Escenario {
     	this.puntos=0;
     	this.tiempo=0;
     	this.gui=gui;
+    	hilos=new LinkedList<MaloThread>();
        Inicializar();
        HiloTiempo=new TiempoThread(this);
        HiloTiempo.start();
@@ -141,16 +142,16 @@ public class Escenario {
 		int columna;
     	int CantAltair=2;
     	misAltair=new LinkedList<Altair>();
-    	hilos=new LinkedList<MaloThread>();
+    	MaloThread hilo;
         for(int i=0; i<CantAltair;i++)
     	{
         	fila = random.nextInt(this.Ancho - 2) + 1; // Numero aleatorio entre 1 y cantidad de filas - 1
     		columna = random.nextInt(this.Largo - 2) + 1; // Numero aleatorio entre 1 y cantidad de columnas - 1
         	misAltair.add(new Altair(this,fila,columna));//Falta setear posicion aleatoria! 
-    		
-    		this.hilos.add(new MaloThread(misAltair.get(i)));
-    		misAltair.get(i).SetHilo(hilos.get(i));
-     		this.hilos.get(i).start();
+    		hilo=new MaloThread(misAltair.get(i));
+    		this.hilos.add(hilo);
+    		misAltair.get(i).SetHilo(hilo);
+     		hilo.start();
     	}
     }
     
@@ -161,30 +162,34 @@ public class Escenario {
     	int columna;
     	int CantRugulos=3;
     	misRugulos=new LinkedList<Rugulos>();
-    	hilos=new LinkedList<MaloThread>();
+    	MaloThread hilo;
         for(int i=0; i<CantRugulos;i++)
     	{
         	fila = random.nextInt(this.Ancho - 2) + 1; // Numero aleatorio entre 1 y cantidad de filas - 1
     		columna = random.nextInt(this.Largo - 2) + 1; // Numero aleatorio entre 1 y cantidad de columnas - 1
     		misRugulos.add(new Rugulos(this,fila,columna));//Falta setear posicion aleatoria! 
-    		
-    		this.hilos.add(new MaloThread(misRugulos.get(i)));
-    		misRugulos.get(i).SetHilo(hilos.get(i));
-     		this.hilos.get(i).start();
+    		hilo=new MaloThread(misRugulos.get(i));
+    		this.hilos.add(hilo);
+    		misRugulos.get(i).SetHilo(hilo);
+    		hilo.start();
     	}
     }
 
     private void InicializarSirius()
     {   
-    	Random random = new Random();
-    	int fila=11;
+     	int fila=11;
     	int columna=29;
-      	misSirius=new LinkedList<Sirius>();
-    	hilos=new LinkedList<MaloThread>();
-    	misSirius.add(new Sirius(this,fila,columna));    		
-    	this.hilos.add(new MaloThread(misSirius.get(0)));
-    		misSirius.get(0).SetHilo(hilos.get(0));
-     		this.hilos.get(0).start();
+    	int CantSirius=1;
+    	misSirius=new LinkedList<Sirius>();
+    	MaloThread hilo;
+        for(int i=0; i<CantSirius;i++)
+    	{
+    		misSirius.add(new Sirius(this,fila,columna));
+    		hilo=new MaloThread(misSirius.get(i));
+    		this.hilos.add(hilo);
+    		misSirius.get(i).SetHilo(hilo);
+    		hilo.start();
+    	}
     	
     }
     

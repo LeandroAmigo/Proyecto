@@ -91,7 +91,7 @@ public class Rugulos extends Enemigo{
 				break;
 		}
     }
-    public boolean atraviesaPared(){return false;}
+  
 
    
 }

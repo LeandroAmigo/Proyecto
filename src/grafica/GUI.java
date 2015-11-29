@@ -217,7 +217,7 @@ public class GUI extends JFrame {
 		imagen.setIcon(new ImageIcon(this.getClass().getResource("/Imagenes/FinDelJuego.jpg")));
 		imagen.setBounds(0,-50, 998, 496);
 		this.addPanelEscenario(imagen, 1);
-		this.repaint();
+		this.dispose();
 		
 		
 	}
