@@ -20,6 +20,7 @@ public class Sirius extends Enemigo{
      */
     public Sirius(Escenario e,int fila,int col) {
     	super(e);
+    	velocidad=3;
     	this.miCelda=e.getPosicion(fila, col);
     	miGrafica=new EntidadGrafica(this,fila,col,e.getGui());
     	  
@@ -78,23 +79,25 @@ public class Sirius extends Enemigo{
 		switch (dir) {
 			case 0 : //Movimiento arriba
 				
-				miEscenario.getLogica().MoverArriba(miCelda, this);
+					miEscenario.getLogica().MoverArriba(miCelda, this);
 				
 				
 				break;
 			case 1 ://movimiento abajo
+				
 					miEscenario.getLogica().MoverAbajo(miCelda, this);
 					
 					
 				break;
 			case 2 ://movimiento izquierda
+				
 					miEscenario.getLogica().MoverIzquierda(miCelda, this);
 					
 				
 					break;
 			case 3 ://movimiento derecha
 				
-				miEscenario.getLogica().MoverDerecha(miCelda, this);
+					miEscenario.getLogica().MoverDerecha(miCelda, this);
 				
 				
 				break;

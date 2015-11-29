@@ -92,7 +92,7 @@ public class Logica {
         // TODO implement here
     	if(c.getColumna()!=30)
     	{	
-    		Celda ppos=c.getEscenario().getPosicion(c.getFila(), c.getColumna()+e.getVelocidad());//Almacena la posicion a la que se desea mover
+    		Celda ppos=c.getEscenario().getPosicion(c.getFila(), c.getColumna()+1);//Almacena la posicion a la que se desea mover
     		ppos.Recibir(e);
     		//System.out.println("Fila: "+e.getPosicion().getFila()+" Columna: "+e.getPosicion().getColumna());
     		e.getGraficos().SetImagen(CONSTANTES.B_MirarDerecha, e);
@@ -103,7 +103,7 @@ public class Logica {
         // TODO implement here
     	if(c.getFila()!=0)
     	{	
-    		Celda ppos=c.getEscenario().getPosicion(c.getFila()-e.getVelocidad(), c.getColumna());//Almacena la posicion a la que se desea mover
+    		Celda ppos=c.getEscenario().getPosicion(c.getFila()-1, c.getColumna());//Almacena la posicion a la que se desea mover
     		ppos.Recibir(e);
     		//System.out.println("Fila: "+e.getPosicion().getFila()+" Columna: "+e.getPosicion().getColumna());
     		e.getGraficos().SetImagen(CONSTANTES.B_MirarArriba, e);
@@ -114,7 +114,7 @@ public class Logica {
         // TODO implement here
     	if(c.getFila()!=12)
     	{	
-    		Celda ppos=c.getEscenario().getPosicion(c.getFila()+e.getVelocidad(), c.getColumna());//Almacena la posicion a la que se desea mover
+    		Celda ppos=c.getEscenario().getPosicion(c.getFila()+1, c.getColumna());//Almacena la posicion a la que se desea mover
     		ppos.Recibir(e);
     		//System.out.println("Fila: "+e.getPosicion().getFila()+" Columna: "+e.getPosicion().getColumna());
     		e.getGraficos().SetImagen(CONSTANTES.B_MirarAbajo, e);

@@ -197,7 +197,7 @@ public class Escenario {
     {	
     	
     	this.miMatriz = new Celda[this.Ancho][this.Largo];
-    	int cantDestructibles = 15;//Tiene que ser mayor a la cantidad de powerUp totales
+    	int cantDestructibles = 80;//Tiene que ser mayor a la cantidad de powerUp totales
     	boolean estanTodas = false;
     	int cantSpeedUp=4;
     	int cantFatality=3;
